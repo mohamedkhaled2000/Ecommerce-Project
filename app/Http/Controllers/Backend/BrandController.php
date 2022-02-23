@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use App\Http\Traits\ImageTrait;
+
 use Image;
 
 class BrandController extends Controller
 {
+
+    use ImageTrait;
     public function viewBrand(){
         $brands = Brand::latest()->get();
         return view('backend.brand.brand_view',compact('brands'));
@@ -24,11 +28,7 @@ class BrandController extends Controller
             'brand_name_ar.required' => 'هذا الحقل مطلوب'
         ]);
 
-        $brand_img = $request->file('brand_image');
-        $image_name = hexdec(uniqid()).'.'.$brand_img->getClientOriginalExtension();
-        Image::make($brand_img)->resize(300,300)->save('upload/brand_images/'.$image_name);
-        $brand_img_url = 'upload/brand_images/'.$image_name;
-
+        $brand_img_url = $this->saveImage($request->file('brand_image'),'upload/brand_images/');
         Brand::insert([
             'brand_name_en' => $request->brand_name_en,
             'brand_name_ar' => $request->brand_name_ar,
@@ -59,9 +59,9 @@ class BrandController extends Controller
         if($request->file('brand_image')){
             $brand_img = $request->file('brand_image');
             @unlink(public_path($brand->brand_image));
-            $image_name = hexdec(uniqid()).'.'.$brand_img->getClientOriginalExtension();
-            Image::make($brand_img)->resize(300,300)->save('upload/brand_images/'.$image_name);
-            $brand_img_url = 'upload/brand_images/'.$image_name;
+            
+            $brand_img_url = $this->saveImage($brand_img,'upload/brand_images/');
+
             $brand['brand_image'] = $brand_img_url;
             $brand->save();
             $notification = array(
