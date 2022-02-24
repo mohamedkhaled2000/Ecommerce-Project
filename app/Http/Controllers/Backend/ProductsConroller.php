@@ -69,11 +69,11 @@ class ProductsConroller extends Controller
         // for Multi Images
         $images = $productRequest->file('mulite_img');
         foreach($images as $item){
-            $brand_img_url = $this->saveMuliImgProduct($item,'upload/product_images/mulite_img/');
+            $proudact_img_url = $this->saveMuliImgProduct($item,'upload/product_images/mulite_img/');
 
             MultiImage::insert([
                 'product_id' => $product_id,
-                'photo_name' => $brand_img_url,
+                'photo_name' => $proudact_img_url,
                 'created_at' => Carbon::now(),
             ]);
         }
@@ -87,9 +87,31 @@ class ProductsConroller extends Controller
     }
 
     public function allProduct(){
-        $products = Product::select('id','product_name_en','product_name_ar','product_qty','product_thambnail')->latest()->get();
+        $products = Product::select('id','product_name_en','selling_price','product_qty','discount_price','status','product_thambnail')
+        ->latest()->get();
         return view('backend.product.all_products',compact('products'));
     }
+
+    public function inActiveProduct($id){
+        Product::findOrFail($id)->update(['status' => 0]);
+        $notification = array(
+            'message' => 'Product InActive Successfly',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
+
+    public function ActiveProduct($id){
+        Product::findOrFail($id)->update(['status' => 1]);
+        $notification = array(
+            'message' => 'Product Active Successfly',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
+
 
     public function viewProduct($id){
         $brands = Brand::latest()->get();
@@ -100,6 +122,7 @@ class ProductsConroller extends Controller
         $products = Product::findOrFail($id);
         return view('backend.product.product_view',compact('brands','categories','subcategories','subsubcategories','multi_imag','products'));
     }
+
     public function editProduct($id){
         $brands = Brand::latest()->get();
         $categories = Category::latest()->get();
@@ -149,6 +172,63 @@ class ProductsConroller extends Controller
             'alert-type' => 'success'
         );
         return redirect()->route('all.product')->with($notification);
+    }
+
+    public function updateImageProduct(Request $request){
+
+        $multi_imag = $request->mulite_img;
+
+        foreach($multi_imag as $id => $img){
+            $imgDel = MultiImage::findOrFail($id);
+            unlink($imgDel->photo_name);
+            $product_img_url = $this->saveMuliImgProduct($img,'upload/product_images/mulite_img/');
+
+            MultiImage::where('id',$id)->update([
+                'photo_name' => $product_img_url,
+                'updated_at' => Carbon::now()
+            ]);
+
+        }
+
+
+        $notification = array(
+            'message' => 'Product Image Updated Successfly',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
+
+    public function updateThambnailProduct(Request $request,$id){
+
+        $thambnail_product = $request->product_thambnail;
+        $imgDel = Product::findOrFail($id);
+        unlink($imgDel->product_thambnail);
+        $product_img_url = $this->saveImageProduct($thambnail_product,'upload/product_images/mulite_img/');
+
+        Product::where('id',$id)->update([
+            'product_thambnail' => $product_img_url,
+            'updated_at' => Carbon::now()
+        ]);
+
+        $notification = array(
+            'message' => 'Product Image Updated Successfly',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
+    }
+
+    public function deleteImageProduct($id){
+        $imgDel = MultiImage::findOrFail($id);
+        unlink($imgDel->photo_name);
+        $imgDel->delete();
+
+        $notification = array(
+            'message' => 'Product Image Deleted Successfly',
+            'alert-type' => 'error'
+        );
+        return redirect()->back()->with($notification);
+
     }
 
     public function deleteProduct($id){

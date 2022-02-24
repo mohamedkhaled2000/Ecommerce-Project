@@ -34,30 +34,60 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Product Name En</th>
-                                        <th>Product Name AR</th>
-                                        <th>Quantity</th>
                                         <th>Image</th>
+                                        <th>Product En</th>
+                                        <th>Product Price</th>
+                                        <th>Discount</th>
+                                        <th>Status</th>
+                                        <th>Quantity</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($products as $product)
                                     <tr>
-                                        <td>{{ $product->product_name_en }}</td>
-                                        <td>{{ $product->product_name_ar }}</td>
-                                        <td>{{ $product->product_qty }}</td>
                                         <td><img src="{{ asset($product->product_thambnail) }}" alt="{{ $product->product_name_en }}" style="width:60px;height:70px"></td>
+                                        <td>{{ $product->product_name_en }}</td>
+                                        <td>{{ $product->selling_price }} $</td>
                                         <td>
-                                            <a class="btn btn-warning" href="{{ route('view.product',$product->id) }}">
+                                            @if ($product->discount_price == null)
+                                            <span class="badge badge-pill badge-danger">No Discount</span>
+                                            @else
+                                                @php
+                                                    $amount = $product->selling_price - $product->discount_price;
+                                                    $discount = 100 - ($amount / $product->selling_price * 100);
+                                                @endphp
+                                                <span class="badge badge-pill badge-danger">{{ round( $discount) }}%</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                        @if ($product->status == 1)
+                                            <span class="badge badge-pill badge-success">Active</span>
+                                        @else
+                                        <span class="badge badge-pill badge-danger">InActive</span>
+                                        @endif
+                                        </td>
+                                        <td>{{ $product->product_qty }}</td>
+                                        <td width="25%">
+                                            <a class="btn btn-warning" href="{{ route('view.product',$product->id) }}" title="View">
                                                 <i class="fa fa-eye"></i>
                                             </a>
-                                            <a class="btn btn-info" href="{{ route('edit.product',$product->id) }}">
+                                            <a class="btn btn-info" href="{{ route('edit.product',$product->id) }}" title="Edit">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-danger" href="{{ route('delete.product',$product->id) }}" id="delete">
+                                            <a class="btn btn-danger" href="{{ route('delete.product',$product->id) }}" title="Delete" id="delete">
                                                 <i class="fa fa-trash"></i>
                                             </a>
+
+                                            @if ($product->status == 1)
+                                            <a class="btn btn-danger" href="{{ route('inactive.product',$product->id) }}" title="InActive">
+                                                <i class="fa fa-arrow-down"></i>
+                                            </a>
+                                            @else
+                                            <a class="btn btn-success" href="{{ route('active.product',$product->id) }}" title="Active">
+                                                <i class="fa fa-arrow-up"></i>
+                                            </a>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
@@ -65,8 +95,10 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>Product Name En</th>
-                                        <th>Product Name AR</th>
+                                        <th>Product En</th>
+                                        <th>Product Price</th>
+                                        <th>Discount</th>
+                                        <th>Status</th>
                                         <th>Quantity</th>
                                         <th>Image</th>
                                         <th>Action</th>

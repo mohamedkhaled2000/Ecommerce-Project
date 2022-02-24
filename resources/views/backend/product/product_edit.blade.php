@@ -427,6 +427,93 @@
 
     </section>
     <!-- /.content -->
+
+
+
+    {{-- //////////////////////// MUlti Images /////////////////////// --}}
+
+    <section class="content">
+        <div class="col-md-12">
+            <div class="box bt-3 border-info">
+              <div class="box-header">
+                <h4 class="box-title">Product Images</h4>
+              </div>
+
+              <div class="box-body">
+
+                <form action="{{ route('update.imageProduct') }}" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        @foreach ($multi_imag as $multi)
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="{{ asset($multi->photo_name) }}" alt="{{ $products->product_name_en }}"style="width: 150px;height:250px">
+                                <div class="card-body">
+                                    <h5 class="card-title">
+                                        <a href="{{ route('delete.imageProduct',$multi->id) }}" class="btn btn-danger" id="delete" title="Delete"><i class="fa fa-trash"></i></a>
+                                    </h5>
+                                    <p class="card-text">
+                                        <div class="form-group">
+                                            <label class="form-control-label">Change Image <span class="text-danger">*</span></label>
+                                            <input class="form-control" type="file" name="mulite_img[ {{ $multi->id }} ]" >
+                                        </div>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    <div class="text-xs-right">
+                        <input type="submit" class="btn btn-rounded btn-info" value="Update Image">
+                    </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+    </section>
+
+        {{-- //////////////////////// thambnail Images /////////////////////// --}}
+        <section class="content">
+            <div class="col-md-12">
+                <div class="box bt-3 border-info">
+                  <div class="box-header">
+                    <h4 class="box-title">Product thambnail Image</h4>
+                  </div>
+
+                  <div class="box-body">
+
+                    <form action="{{ route('update.thambnailProduct',$products->id) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card" style="width: 18rem;">
+                                    <img class="card-img-top" src="{{ asset($products->product_thambnail) }}" alt="{{ $products->product_name_en }}"style="width: 150px;height:250px">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            <div class="form-group">
+                                                <label class="form-control-label">Change Image <span class="text-danger">*</span></label>
+                                                <input class="form-control" type="file" name="product_thambnail" >
+                                            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-xs-right">
+                            <input type="submit" class="btn btn-rounded btn-info" value="Update Image">
+                        </div>
+                    </form>
+
+
+                  </div>
+                </div>
+              </div>
+        </section>
+
   </div>
 
   <script>
