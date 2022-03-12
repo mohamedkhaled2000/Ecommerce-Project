@@ -59,5 +59,61 @@ class SliderController extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function editSlider($id){
+        $sliders = Slider::findOrFail($id);
+        return view('backend.slider.slider_edit',compact('sliders'));
+    }
+
+    public function updateSlider(Request $request,$id){
+
+
+        $slider = Slider::findOrFail($id);
+        $slider->title_en = $request->title_en;
+        $slider->title_ar = $request->title_ar;
+        $slider->description_en = $request->description_en;
+        $slider->description_ar = $request->description_ar;
+        $slider->status = $request->status;
+
+
+        if($request->hasFile('slider_image')){
+            $request->validate([
+                'slider_image' => 'required',
+            ],[
+                'slider_image.required' => 'هذا الحقل مطلوب'
+            ]);
+
+            $slider = Slider::findOrFail($id);
+            unlink($slider->slider_image);
+
+            $slider_img_url = $this->saveSlider($request->file('slider_image'),'upload/slider_images/');
+            $slider->slider_image = $slider_img_url;
+            $slider->save();
+            $notification = array(
+                'message' => 'Slider Updated Successfly',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.sliders')->with($notification);
+        }else{
+
+            $slider->save();
+            $notification = array(
+                'message' => 'Slider Updated Successfly',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('all.sliders')->with($notification);
+        }
+    }
+
+    public function deleteSlider($id){
+        $slider = Slider::findOrFail($id);
+        unlink($slider->slider_image);
+        Slider::findOrFail($id)->delete();
+        $notification = array(
+            'message' => 'Slider Deleted Successfly',
+            'alert-type' => 'error'
+        );
+        return redirect()->back()->with($notification);
+    }
+
 
 }

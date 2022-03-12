@@ -29,6 +29,7 @@ class BrandController extends Controller
         ]);
 
         $brand_img_url = $this->saveImage($request->file('brand_image'),'upload/brand_images/');
+
         Brand::insert([
             'brand_name_en' => $request->brand_name_en,
             'brand_name_ar' => $request->brand_name_ar,
@@ -59,7 +60,7 @@ class BrandController extends Controller
         if($request->file('brand_image')){
             $brand_img = $request->file('brand_image');
             @unlink(public_path($brand->brand_image));
-            
+
             $brand_img_url = $this->saveImage($brand_img,'upload/brand_images/');
 
             $brand['brand_image'] = $brand_img_url;

@@ -15,4 +15,6 @@ class Category extends Model
         'category_slug_ar',
         'category_icon',
     ];
+
+
 }

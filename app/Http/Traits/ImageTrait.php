@@ -37,8 +37,8 @@ trait ImageTrait {
         $brand_img = $photo;
         $image_name = hexdec(uniqid()).'.'.$brand_img->getClientOriginalExtension();
         Image::make($brand_img)->resize(870,370)->save($path.$image_name);
-        $img_url = $path.$image_name;
-        return $img_url;
+        $slider_img_url = $path.$image_name;
+        return $slider_img_url;
     }
 
 

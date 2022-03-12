@@ -14,10 +14,10 @@
                 <br><br>
                 <ul class="list-group list-group-flush">
                     <li>
-                        <a class="btn btn-primary btn-sm btn-block" href="{{ url('/') }}">Home</a>
-                        <a class="btn btn-primary btn-sm btn-block" href="{{ route('user.profile') }}">Profile Update</a>
-                        <a class="btn btn-primary btn-sm btn-block" href="{{ route('user.change.password') }}">Change Password</a>
-                        <a class="btn btn-danger btn-sm btn-block" href="{{ route('user.logout') }}">Logout</a>
+                        <a class="btn btn-primary btn-sm btn-block" href="{{ url('/') }}">{{__('masseges.Home')}}</a>
+                        <a class="btn btn-primary btn-sm btn-block" href="{{ route('user.profile') }}">{{__('masseges.Profile Update')}}</a>
+                        <a class="btn btn-primary btn-sm btn-block" href="{{ route('user.change.password') }}">{{__('masseges.Change Password')}}</a>
+                        <a class="btn btn-danger btn-sm btn-block" href="{{ route('user.logout') }}">{{__('masseges.Logout')}}</a>
                     </li>
                 </ul>
             </div>
@@ -26,7 +26,7 @@
 
             </div>
             <div class="col-md-8">
-                <h3><span>Hi...</span><strong>{{ Auth::user()->name }} Welcom Back To Easy Shop</strong></h3>
+                <h3><span>Hi...</span><strong>{{ Auth::user()->name }} {{__('masseges.Welcom Back To Easy Shop')}}</strong></h3>
 
             </div>
 

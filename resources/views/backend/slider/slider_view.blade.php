@@ -68,10 +68,10 @@
                                             @endif
                                         </td>
                                         <td width="25%">
-                                            <a class="btn btn-info btn-sm" href="">
+                                            <a class="btn btn-info btn-sm" href="{{ route('edit.slider',$slider->id) }}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-danger btn-sm" href="" id="delete">
+                                            <a class="btn btn-danger btn-sm" href="{{ route('slider.delete',$slider->id) }}" id="delete">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                             @if ($slider->status == 1)
