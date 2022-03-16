@@ -9,6 +9,7 @@ return [
     'Checkout'                  => 'Checkout',
     'My Cart'                   => 'My Cart',
     'Wishlist'                  => 'Wishlist',
+    'My Wishlist'               => 'My Wishlist',
     'Home'                      => 'Home',
     'Todays offer'              => 'Todays offer',
     'Shop Now'                  => 'Shop Now',
@@ -40,5 +41,7 @@ return [
     'Category'                  => 'Category',
     'Brand'                     => 'Brand',
     'OutStock'                  => 'OutStock',
-    'Stock'                     => 'Stock'
+    'Stock'                     => 'Stock',
+    'Checkout'                  => 'Checkout',
+    'Shopping Cart'             => 'Shopping Cart'
 ];

@@ -128,7 +128,7 @@ class IndexController extends Controller
     }
 
     public function productDetails($slug,$id){
-        $details = Product::findByHashidOrFail($id);
+        $details = Product::findOrFail($id);
         $product_color_en = explode(',',$details->product_color_en);
         $product_color_ar = explode(',',$details->product_color_ar);
         $product_size_en = explode(',',$details->product_size_en);

@@ -34,7 +34,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                             <div class="col col-xs-5">
                                                 <div class="product-image">
                                                     <div class="image"> <a
-                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->hashid) }}">
+                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->id) }}">
                                                             <img src="{{ asset($pro->product_thambnail) }}" alt=""> </a>
                                                     </div>
                                                     <!-- /.image -->
@@ -46,7 +46,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                             <div class="col col-xs-7">
                                                 <div class="product-info">
                                                     <h3 class="name"><a
-                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->hashid) }}">{{ $pro->ProName }}</a>
+                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->id) }}">{{ $pro->ProName }}</a>
                                                     </h3>
                                                     <div class="rating rateit-small"></div>
                                                     <div class="product-price"> <span class="price">
@@ -91,7 +91,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                             <div class="col col-xs-5">
                                                 <div class="product-image">
                                                     <div class="image"> <a
-                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->hashid) }}">
+                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->id) }}">
                                                             <img src="{{ asset($pro->product_thambnail) }}" alt=""> </a>
                                                     </div>
                                                     <!-- /.image -->
@@ -103,7 +103,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                             <div class="col col-xs-7">
                                                 <div class="product-info">
                                                     <h3 class="name"><a
-                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->hashid) }}">{{ $pro->ProName }}</a>
+                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->id) }}">{{ $pro->ProName }}</a>
                                                     </h3>
                                                     <div class="rating rateit-small"></div>
                                                     <div class="product-price"> <span class="price">
@@ -299,7 +299,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                         <div class="product">
                                             <div class="product-image">
                                                 <div class="image"> <a
-                                                        href="{{ url('/product/' . $product->proSlug . '/' . $product->hashid) }}"><img
+                                                        href="{{ url('/product/' . $product->proSlug . '/' . $product->id) }}"><img
                                                             src="{{ asset($product->product_thambnail) }}" alt=""></a>
                                                 </div>
                                                 <!-- /.image -->
@@ -312,7 +312,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
 
                                             <div class="product-info text-left">
                                                 <h3 class="name"><a
-                                                        href="{{ url('/product/' . $product->proSlug . '/' . $product->hashid) }}">{{ $product->ProName }}</a>
+                                                        href="{{ url('/product/' . $product->proSlug . '/' . $product->id) }}">{{ $product->ProName }}</a>
                                                 </h3>
                                                 <div class="rating rateit-small"></div>
                                                 <div class="description"></div>
@@ -335,9 +335,11 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                                             <button class="btn btn-primary cart-btn"
                                                                 type="button">{{ __('masseges.Add to cart') }}</button>
                                                         </li>
-                                                        <li class="lnk wishlist"> <a data-toggle="tooltip"
-                                                                class="add-to-cart" href="detail.html" title="Wishlist">
-                                                                <i class="icon fa fa-heart"></i> </a> </li>
+                                                        <li class="lnk wishlist">
+                                                            <a data-toggle="tooltip" class="add-to-cart" title="" id="{{ $product->id }}" onclick="addToWhishlist(this.id)" data-original-title="Wishlist">
+                                                                <i class="icon fa fa-heart"></i>
+                                                            </a>
+                                                        </li>
                                                         <li class="lnk"> <a data-toggle="tooltip"
                                                                 class="add-to-cart" href="detail.html" title="Compare">
                                                                 <i class="fa fa-signal" aria-hidden="true"></i> </a>
@@ -384,7 +386,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                             <div class="product">
                                                 <div class="product-image">
                                                     <div class="image"> <a
-                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->hashid) }}"><img
+                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->id) }}"><img
                                                                 src="{{ asset($pro->product_thambnail) }}" alt=""></a>
                                                     </div>
                                                     <!-- /.image -->
@@ -397,7 +399,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
 
                                                 <div class="product-info text-left">
                                                     <h3 class="name"><a
-                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->hashid) }}">{{ $pro->ProName }}</a>
+                                                            href="{{ url('/product/' . $pro->proSlug . '/' . $pro->id) }}">{{ $pro->ProName }}</a>
                                                     </h3>
                                                     <div class="rating rateit-small"></div>
                                                     <div class="description"></div>
@@ -420,9 +422,11 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                                                 <button class="btn btn-primary cart-btn"
                                                                     type="button">{{ __('masseges.Add to cart') }}</button>
                                                             </li>
-                                                            <li class="lnk wishlist"> <a class="add-to-cart"
-                                                                    href="detail.html" title="Wishlist"> <i
-                                                                        class="icon fa fa-heart"></i> </a> </li>
+                                                            <li class="lnk wishlist">
+                                                                <a data-toggle="tooltip" class="add-to-cart" title="" id="{{ $pro->id }}" onclick="addToWhishlist(this.id)" data-original-title="Wishlist">
+                                                                    <i class="icon fa fa-heart"></i>
+                                                                </a>
+                                                            </li>
                                                             <li class="lnk"> <a class="add-to-cart"
                                                                     href="detail.html" title="Compare"> <i
                                                                         class="fa fa-signal" aria-hidden="true"></i> </a>
@@ -496,7 +500,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                             <div class="product">
                                 <div class="product-image">
                                     <div class="image"> <a
-                                            href="{{ url('/product/' . $featured->proSlug . '/' . $featured->hashid) }}"><img
+                                            href="{{ url('/product/' . $featured->proSlug . '/' . $featured->id) }}"><img
                                                 src="{{ asset($featured->product_thambnail) }}" alt=""></a> </div>
                                     <!-- /.image -->
 
@@ -508,7 +512,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
 
                                 <div class="product-info text-left">
                                     <h3 class="name"><a
-                                            href="{{ url('/product/' . $featured->proSlug . '/' . $featured->hashid) }}">{{ $featured->ProName }}</a>
+                                            href="{{ url('/product/' . $featured->proSlug . '/' . $featured->id) }}">{{ $featured->ProName }}</a>
                                     </h3>
                                     <div class="rating rateit-small"></div>
                                     <div class="description"></div>
@@ -530,8 +534,12 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                                 <button class="btn btn-primary cart-btn"
                                                     type="button">{{ __('masseges.Add to cart') }}</button>
                                             </li>
-                                            <li class="lnk wishlist"> <a class="add-to-cart" href="detail.html"
-                                                    title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                            <li class="lnk wishlist">
+                                                    <a data-toggle="tooltip" class="add-to-cart" title="" id="{{ $featured->id }}" onclick="addToWhishlist(this.id)" data-original-title="Wishlist">
+                                                        <i class="icon fa fa-heart"></i>
+                                                    </a>
+                                            </li>
+
                                             <li class="lnk"> <a class="add-to-cart" href="detail.html"
                                                     title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a>
                                             </li>
@@ -571,7 +579,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                             <div class="product">
                                 <div class="product-image">
                                     <div class="image"> <a
-                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->hashid) }}"><img
+                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}"><img
                                                 src="{{ asset($featured->product_thambnail) }}" alt=""></a> </div>
                                     <!-- /.image -->
 
@@ -583,7 +591,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
 
                                 <div class="product-info text-left">
                                     <h3 class="name"><a
-                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->hashid) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
+                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
                                     </h3>
                                     <div class="rating rateit-small"></div>
                                     <div class="description"></div>
@@ -605,8 +613,11 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                                 <button class="btn btn-primary cart-btn"
                                                     type="button">{{ __('masseges.Add to cart') }}</button>
                                             </li>
-                                            <li class="lnk wishlist"> <a class="add-to-cart" href="detail.html"
-                                                    title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                            <li class="lnk wishlist">
+                                                <a data-toggle="tooltip" class="add-to-cart" title="" id="{{ $featured->id }}" onclick="addToWhishlist(this.id)" data-original-title="Wishlist">
+                                                    <i class="icon fa fa-heart"></i>
+                                                </a>
+                                            </li>
                                             <li class="lnk"> <a class="add-to-cart" href="detail.html"
                                                     title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a>
                                             </li>
@@ -647,7 +658,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                             <div class="product">
                                 <div class="product-image">
                                     <div class="image"> <a
-                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->hashid) }}"><img
+                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}"><img
                                                 src="{{ asset($featured->product_thambnail) }}" alt=""></a> </div>
                                     <!-- /.image -->
 
@@ -659,7 +670,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
 
                                 <div class="product-info text-left">
                                     <h3 class="name"><a
-                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->hashid) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
+                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
                                     </h3>
                                     <div class="rating rateit-small"></div>
                                     <div class="description"></div>
@@ -681,8 +692,11 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                                 <button class="btn btn-primary cart-btn"
                                                     type="button">{{ __('masseges.Add to cart') }}</button>
                                             </li>
-                                            <li class="lnk wishlist"> <a class="add-to-cart" href="detail.html"
-                                                    title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                            <li class="lnk wishlist">
+                                                <a data-toggle="tooltip" class="add-to-cart" title="" id="{{ $featured->id }}" onclick="addToWhishlist(this.id)" data-original-title="Wishlist">
+                                                    <i class="icon fa fa-heart"></i>
+                                                </a>
+                                            </li>
                                             <li class="lnk"> <a class="add-to-cart" href="detail.html"
                                                     title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a>
                                             </li>
@@ -751,7 +765,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                             <div class="product">
                                 <div class="product-image">
                                     <div class="image"> <a
-                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->hashid) }}"><img
+                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}"><img
                                                 src="{{ asset($featured->product_thambnail) }}" alt=""></a> </div>
                                     <!-- /.image -->
 
@@ -763,7 +777,7 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
 
                                 <div class="product-info text-left">
                                     <h3 class="name"><a
-                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->hashid) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
+                                            href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
                                     </h3>
                                     <div class="rating rateit-small"></div>
                                     <div class="description"></div>
@@ -785,8 +799,11 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                                 <button class="btn btn-primary cart-btn"
                                                     type="button">{{ __('masseges.Add to cart') }}</button>
                                             </li>
-                                            <li class="lnk wishlist"> <a class="add-to-cart" href="detail.html"
-                                                    title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
+                                            <li class="lnk wishlist">
+                                                <a data-toggle="tooltip" class="add-to-cart" title="" id="{{ $featured->id }}" onclick="addToWhishlist(this.id)" data-original-title="Wishlist">
+                                                    <i class="icon fa fa-heart"></i>
+                                                </a>
+                                            </li>
                                             <li class="lnk"> <a class="add-to-cart" href="detail.html"
                                                     title="Compare"> <i class="fa fa-signal" aria-hidden="true"></i> </a>
                                             </li>

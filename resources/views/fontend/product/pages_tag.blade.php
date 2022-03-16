@@ -288,7 +288,7 @@
                             <div class="product">
                                 <div class="product-image">
                                     <div class="image"> <a
-                                            href="{{ url('/product/' . $product->product_slug_en . '/' . $product->hashid) }}"><img
+                                            href="{{ url('/product/' . $product->product_slug_en . '/' . $product->id) }}"><img
                                                 src="{{ asset($product->product_thambnail) }}" alt=""></a>
                                     </div>
                                     <!-- /.image -->
@@ -302,7 +302,7 @@
                                 <div class="product-info text-left">
                                     <h3 class="name">
                                         <a
-                                            href="{{ url('/product/' . $product->product_slug_en . '/' . $product->hashid) }}">
+                                            href="{{ url('/product/' . $product->product_slug_en . '/' . $product->id) }}">
                                             {{ LaravelLocalization::getCurrentLocale() === 'ar' ?$product->product_name_ar:$product->product_name_en }}
                                         </a>
                                     </h3>
@@ -382,7 +382,7 @@
                           <div class="col col-sm-8 col-lg-8">
                             <div class="product-info">
                               <h3 class="name">
-                                  <a href="{{ url('/product/' . $product->product_slug_en . '/' . $product->hashid) }}">
+                                  <a href="{{ url('/product/' . $product->product_slug_en . '/' . $product->id) }}">
                                     {{ LaravelLocalization::getCurrentLocale() === 'ar' ?$product->product_name_ar:$product->product_name_en }}
                                     </a></h3>
                               <div class="rating rateit-small"></div>

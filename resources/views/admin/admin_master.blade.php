@@ -315,8 +315,6 @@
 
      {{-- Tages --}}
     <script src="{{asset('../assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js')}}"></script>
-
-
     {{-- Editor --}}
 	<script src="{{asset('../assets/vendor_components/ckeditor/ckeditor.js')}}"></script>
 	<script src="{{asset('../assets/vendor_plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js')}}"></script>

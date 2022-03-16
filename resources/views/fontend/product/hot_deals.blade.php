@@ -45,7 +45,7 @@
 
                     <div class="product-info text-left m-t-20">
                         <h3 class="name"><a
-                                href="{{ url('/product/' . $pro->proSlug . '/' . $pro->hashid) }}">{{ $pro->ProName }}</a>
+                                href="{{ url('/product/' . $pro->proSlug . '/' . $pro->id) }}">{{ $pro->ProName }}</a>
                         </h3>
                         <div class="rating rateit-small"></div>
                         <div class="product-price"> <span class="price"> ${{ $pro->selling_price }}

@@ -10,6 +10,8 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\AddCartController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\User\MyCartController;
+use App\Http\Controllers\User\wishlistsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -163,6 +165,29 @@ Route::group(
 
     // Add To Cart
     Route::post('/cart/data/store/{id}', [AddCartController::class , 'AddToCart']);
+
+    // Get Mini Cart
+    Route::get('/cart/mini', [AddCartController::class , 'miniCart']);
+
+    // Remove Mini Cart
+    Route::get('/minicart/product-remove/{rowid}', [AddCartController::class , 'removeMiniCart']);
+
+    // Middellware User
+    Route::middleware('auth')->group(function(){
+        // Whishlist
+
+        Route::get('/wishlist', [wishlistsController::class , 'index'])->name('wishlist');
+        Route::post('/add/whishlist/{product_id}', [wishlistsController::class , 'addWhishlist']);
+        Route::get('/remove/wishlist/{id}', [wishlistsController::class , 'removeWishlist']);
+
+    });
+    // My User Cart
+    Route::get('/myCart', [MyCartController::class , 'index'])->name('my_Cart');
+    Route::get('/get/my-cart', [MyCartController::class , 'MyCart']);
+    Route::get('/remove/cart/{id}', [MyCartController::class , 'removeCart']);
+    Route::get('/increase/Qty/{id}', [MyCartController::class , 'increase']);
+    Route::get('/decrease/Qty/{id}', [MyCartController::class , 'decrease']);
+
 
 
 

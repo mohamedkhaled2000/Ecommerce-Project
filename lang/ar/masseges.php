@@ -9,6 +9,7 @@ return [
     'Checkout'                  => 'الدفع',
     'My Cart'                   => 'عربة التسوق',
     'Wishlist'                  => 'القائمة المفضلة',
+    'My Wishlist'               => 'مفضلاتى',
     'Home'                      => 'الرئيسية',
     'Todays offer'              => 'عروض اليوم',
     'Shop Now'                  => 'تسوق الان',
@@ -41,4 +42,6 @@ return [
     'Brand'                     => 'ماركة',
     'OutStock'                  => 'غير متوفر',
     'Stock'                     => 'متوفر',
+    'Checkout'                  => 'ادفع الان',
+    'Shopping Cart'             => 'عربة التسوق',
 ];

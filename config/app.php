@@ -164,7 +164,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-
+        Darryldecode\Cart\CartServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -193,6 +193,11 @@ return [
     | the aliases are "lazy" loaded so they don't hinder performance.
     |
     */
+
+    'aliases' => [
+
+        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+    ],
 
     'aliases' => Facade::defaultAliases()->merge([
         'Image' => Intervention\Image\Facades\Image::class,

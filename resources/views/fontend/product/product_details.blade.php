@@ -158,7 +158,7 @@
 
                             <div class='col-sm-6 col-md-7 product-info-block'>
                                 <div class="product-info">
-                                    <h1 class="name">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $details->product_name_ar:$details->product_name_en }}</h1>
+                                    <h1 class="name" id="proName">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $details->product_name_ar:$details->product_name_en }}</h1>
 
                                     <div class="rating-reviews m-t-20">
                                         <div class="row">
@@ -232,7 +232,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label class="info-title control-label">{{__('masseges.Select Color')}}</label>
-                                                    <select class="form-control unicase-form-control selectpicker" style="display: none;">
+                                                    <select class="form-control unicase-form-control selectpicker" id="color" style="display: none;">
                                                         <option>--{{__('masseges.Select Color')}}--</option>
                                                         @if (LaravelLocalization::getCurrentLocale() === 'ar')
 
@@ -249,9 +249,9 @@
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <div class="form-group">
+                                                <div class="form-group" style="display: {{ $details->product_size_en == null  ?  'none' : ''}} ">
                                                     <label class="info-title control-label">{{__('masseges.Select Size')}}</label>
-                                                    <select class="form-control unicase-form-control selectpicker" style="display: none;">
+                                                    <select class="form-control unicase-form-control selectpicker" id="size" style="display: none;">
                                                         <option>--{{__('masseges.Select Size')}}--</option>
                                                         @if (LaravelLocalization::getCurrentLocale() === 'ar')
 
@@ -291,14 +291,19 @@
                                                                     class="ir"><i
                                                                         class="icon fa fa-sort-desc"></i></span></div>
                                                         </div>
-                                                        <input type="text" value="1">
+                                                        <input type="number" id="qty" value="1" min="1">
                                                     </div>
                                                 </div>
                                             </div>
+                                            <input type="hidden" id="product_id" value="{{ $details->id }}">
 
                                             <div class="col-sm-7">
-                                                <a href="#" class="btn btn-primary"><i
-                                                        class="fa fa-shopping-cart inner-right-vs"></i>{{__('masseges.Add to cart')}}</a>
+                                                @if (Auth::user())
+                                                <button type="submit" class="btn btn-primary" onclick="AddToCart()"><i
+                                                        class="fa fa-shopping-cart inner-right-vs"></i>{{__('masseges.Add to cart')}}</button>
+                                                @else
+                                                 <a href="{{url('/login')}}" class="btn btn-primary">{{__('masseges.Add to cart')}}</a>
+                                                @endif
                                             </div>
 
 
@@ -510,7 +515,7 @@
                                     <div class="product">
                                         <div class="product-image">
                                             <div class="image"> <a
-                                                    href="{{ url('/product/' . $pro->product_slug_en . '/' . $pro->hashid) }}"><img
+                                                    href="{{ url('/product/' . $pro->product_slug_en . '/' . $pro->id) }}"><img
                                                         src="{{ asset($pro->product_thambnail) }}" alt=""></a>
                                             </div>
                                             <!-- /.image -->
@@ -523,7 +528,7 @@
 
                                         <div class="product-info text-left">
                                             <h3 class="name"><a
-                                                    href="{{ url('/product/' . $pro->product_slug_en . '/' . $pro->hashid) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $pro->product_name_ar:$pro->product_name_en }}</a>
+                                                    href="{{ url('/product/' . $pro->product_slug_en . '/' . $pro->id) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $pro->product_name_ar:$pro->product_name_en }}</a>
                                             </h3>
                                             <div class="rating rateit-small"></div>
                                             <div class="description"></div>

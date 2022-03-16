@@ -221,7 +221,7 @@ jQuery(".brand-slider").owlCarousel({
     pagination: false,
     paginationSpeed : 400,
     navigationText: ["", ""]
-});    
+});
 jQuery("#advertisement").owlCarousel({
     items : 1,
     itemsDesktopSmall :[979,2],
@@ -231,7 +231,7 @@ jQuery("#advertisement").owlCarousel({
     pagination: true,
     paginationSpeed : 400,
     navigationText: ["", ""]
-});    
+});
 
 
 
@@ -311,7 +311,7 @@ jQuery(function(){
         pagination: true
     });
 
-  
+
 });
 
 
@@ -319,7 +319,7 @@ jQuery(function(){
 
 
 /*===================================================================================*/
-/*  WOW 
+/*  WOW
 /*===================================================================================*/
 
 jQuery(function () {
@@ -328,11 +328,13 @@ jQuery(function () {
 
 
 /*===================================================================================*/
-/*  TOOLTIP 
+/*  TOOLTIP
 /*===================================================================================*/
-jQuery("[data-toggle='tooltip']").tooltip(); 
+jQuery("[data-toggle='tooltip']").tooltip();
 
 
 
 
 })
+
+
