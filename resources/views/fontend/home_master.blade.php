@@ -430,7 +430,7 @@
                             <td class="romove-item">
                             <button id="${value.id}" onclick="cartRemove(this.id)" title="cancel" class="icon"
                                 ><i class="fa fa-trash-o"></i
-                            ></buttond>
+                            ></button>
                             </td>
                             <td class="cart-image">
                             <a class="entry-thumbnail" href="/product/${value.name}/${value.id}">
@@ -495,7 +495,7 @@
             dataType: 'json',
             url: '/remove/cart/'+id,
             success: function(data){
-
+                couponCalculation();
                 cart();
                 miniCart();
                 const Toast = Swal.mixin({
@@ -533,6 +533,7 @@
             success: function(data){
                 cart();
                 miniCart();
+                couponCalculation();
             }
         });
     } //// End Of increasment
@@ -545,9 +546,141 @@
             success: function(data){
                 cart();
                 miniCart();
+                couponCalculation();
             }
         });
     } //// End Of decreasment
+
+    function applyCoupon(){
+        var coupon_name = $('#coupon_name').val();
+        $.ajax({
+            type: 'POST',
+            data:{coupon_name:coupon_name},
+            dataType: 'json',
+            url: '/apply/coupon',
+            success: function(data){
+                hideApplyCoupon();
+                couponCalculation();
+                const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+
+                    if ($.isEmptyObject(data.error)) {
+                        Toast.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: data.success,
+                        });
+                    }else{
+                        Toast.fire({
+                            type: 'error',
+                            icon: 'error',
+                            title: data.error,
+                        });
+                    }
+            },
+        });
+    } //// Apply Coupon
+
+    function couponCalculation(){
+        $.ajax({
+            type: 'GET',
+            url: '/coupon/calculation',
+            dataType: 'json',
+            success: function(data) {
+            if(data.total == 0){
+                $('#couponCalculation').hide();
+            }else{
+                if (data.total) {
+                    $('#couponCalculation').html(
+                        `<tr>
+                            <th>
+                                <div class="cart-sub-total">
+                                Subtotal<span class="inner-left-md">$${data.total}</span>
+                                </div>
+                                <div class="cart-grand-total">
+                                Grand Total<span class="inner-left-md">$${data.total}</span>
+                                </div>
+                            </th>
+                        </tr>`);
+
+                }else{
+                    $('#couponCalculation').html(
+                        `<tr>
+                            <th>
+                                <div class="cart-sub-total">
+                                Subtotal<span class="inner-left-md">$${data.subTotal}</span>
+                                </div>
+                                <div class="cart-sub-total">
+                                Coupon Name<span class="inner-left-md">${data.coupon_name}
+                                <button onclick="couponRemove()" title="cancel" class="icon"
+                                ><i class="fa fa-trash-o"></i>
+                                </button></span>
+                                </div>
+                                <div class="cart-sub-total">
+                                Coupon Disscount<span class="inner-left-md">%${data.coupon_discount}</span>
+                                </div>
+                                <div class="cart-sub-total">
+                                Discount Amount<span class="inner-left-md">$${data.discount_amount}</span>
+                                </div>
+                                <div class="cart-grand-total">
+                                Grand Total<span class="inner-left-md">$${data.total_amount}</span>
+                                </div>
+                            </th>
+                        </tr>`);
+                }
+            }
+            },
+        });
+    } //// Get Coupon Data
+
+    couponCalculation();
+
+    function hideApplyCoupon(){
+        $('#applyedCoupon').hide();
+    } //// hide Apply Coupon
+
+    function showApplyCoupon(){
+        $('#applyedCoupon').show();
+        $('#coupon_name').val('');
+    } //// show Apply Coupon
+
+    function couponRemove(){
+        $.ajax({
+            type: 'GET',
+            url: '/coupon/remove',
+            dataType: 'json',
+            success: function(data) {
+                showApplyCoupon();
+                couponCalculation();
+
+                const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 3000
+                            });
+
+                    if ($.isEmptyObject(data.error)) {
+                        Toast.fire({
+                            type: 'success',
+                            icon: 'success',
+                            title: data.success,
+                        });
+                    }else{
+                        Toast.fire({
+                            type: 'error',
+                            icon: 'error',
+                            title: data.error,
+                        });
+                    }
+            },
+
+        });
+    }
 
     </script>
 

@@ -87,21 +87,33 @@
 
         <li class="header nav-small-cap">User Interface</li>
 
-        <li class="treeview">
-          <a href="#">
-            <i data-feather="grid"></i>
-            <span>Components</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="components_alerts.html"><i class="ti-more"></i>Alerts</a></li>
-            <li><a href="components_badges.html"><i class="ti-more"></i>Badge</a></li>
-            <li><a href="components_buttons.html"><i class="ti-more"></i>Buttons</a></li>
-            <li><a href="components_sliders.html"><i class="ti-more"></i>Sliders</a></li>
-          </ul>
-        </li>
+        <li class="treeview {{ ($prefix == '/coupons') ? 'active' : '' }}">
+            <a href="#">
+              <i data-feather="file"></i>
+              <span>Coupons</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-right pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class=" {{($routes == 'manage.coupons') ? 'active' : '' }}"><a href="{{ route('manage.coupons') }}"><i class="ti-more"></i>Manage Coupons</a></li>
+            </ul>
+          </li>
+
+        <li class="treeview {{ ($prefix == '/shipping-division') ? 'active' : '' }}">
+            <a href="#">
+              <i data-feather="file"></i>
+              <span>Shipping Area</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-right pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li class=" {{($routes == 'manage.division') ? 'active' : '' }}"><a href="{{ route('manage.division') }}"><i class="ti-more"></i>Ship Division</a></li>
+              <li class=" {{($routes == 'manage.district') ? 'active' : '' }}"><a href="{{ route('manage.district') }}"><i class="ti-more"></i>Ship District</a></li>
+              <li class=" {{($routes == 'manage.state') ? 'active' : '' }}"><a href="{{ route('manage.state') }}"><i class="ti-more"></i>Ship State</a></li>
+            </ul>
+          </li>
 
       </ul>
     </section>

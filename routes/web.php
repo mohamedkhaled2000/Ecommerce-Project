@@ -4,7 +4,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\CouponsController;
 use App\Http\Controllers\Backend\ProductsConroller;
+use App\Http\Controllers\Backend\ShippingDivisionContriller;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\Frontend\AddCartController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\User\MyCartController;
 use App\Http\Controllers\User\wishlistsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +36,7 @@ Route::group(['prefix' => 'admin' , 'middleware' => ['admin:admin']],function(){
 });
 
 Route::middleware(['auth:admin'])->group(function(){
-    Route::middleware(['auth:sanctum,admin', 'verified'])->get('/admin/dashboard', function () {
+    Route::middleware(['auth:sanctum,admin'])->get('/admin/dashboard', function () {
         return view('admin.index');
     })->name('dashboard');
 
@@ -127,6 +130,47 @@ Route::middleware(['auth:admin'])->group(function(){
 
     });
 
+
+    /// Coupons Routes
+    Route::prefix('coupons')->group(function(){
+        Route::get('/coupon', [CouponsController::class , 'couponView'])->name('manage.coupons');
+        Route::post('/store' , [CouponsController::class , 'storeCoupon'])->name('coupon.store');
+        Route::get('/edit/{id}' , [CouponsController::class , 'editCoupon'])->name('coupon.edit');
+        Route::post('/update/{id}' , [CouponsController::class , 'updateCoupon'])->name('coupon.update');
+        Route::get('/delete/{id}' , [CouponsController::class , 'deleteCoupon'])->name('coupon.delete');
+
+
+    });
+
+    /// Shipping Area Routes
+    Route::prefix('shipping-division')->group(function(){
+
+        //// Shipping Division Routes
+        Route::get('/view', [ShippingDivisionContriller::class , 'divisionView'])->name('manage.division');
+        Route::post('/store' , [ShippingDivisionContriller::class , 'storeDivision'])->name('division.store');
+        Route::get('/edit/{id}' , [ShippingDivisionContriller::class , 'editDivision'])->name('division.edit');
+        Route::post('/update/{id}' , [ShippingDivisionContriller::class , 'updateDivision'])->name('division.update');
+        Route::get('/delete/{id}' , [ShippingDivisionContriller::class , 'deleteDivision'])->name('division.delete');
+
+        //// Shipping District Routes
+        Route::get('/view/district', [ShippingDivisionContriller::class , 'districtView'])->name('manage.district');
+        Route::post('/store/district' , [ShippingDivisionContriller::class , 'storeDistrict'])->name('district.store');
+        Route::get('/edit/district/{id}' , [ShippingDivisionContriller::class , 'editDistrict'])->name('district.edit');
+        Route::post('/update/district/{id}' , [ShippingDivisionContriller::class , 'updateDistrict'])->name('district.update');
+        Route::get('/delete/district/{id}' , [ShippingDivisionContriller::class , 'deleteDistrict'])->name('district.delete');
+
+        //// Shipping State Routes
+        Route::get('/view/state', [ShippingDivisionContriller::class , 'stateView'])->name('manage.state');
+        Route::post('/store/state' , [ShippingDivisionContriller::class , 'storestate'])->name('state.store');
+        Route::get('/edit/state/{id}' , [ShippingDivisionContriller::class , 'editstate'])->name('state.edit');
+        Route::post('/update/state/{id}' , [ShippingDivisionContriller::class , 'updatestate'])->name('state.update');
+        Route::get('/delete/state/{id}' , [ShippingDivisionContriller::class , 'deletestate'])->name('state.delete');
+        Route::get('district/ajax/{divition_id}' , [ShippingDivisionContriller::class , 'districtAjax']);
+
+
+
+    });
+
 }); // End of Admin Middelware
 
 
@@ -181,6 +225,7 @@ Route::group(
         Route::get('/remove/wishlist/{id}', [wishlistsController::class , 'removeWishlist']);
 
     });
+
     // My User Cart
     Route::get('/myCart', [MyCartController::class , 'index'])->name('my_Cart');
     Route::get('/get/my-cart', [MyCartController::class , 'MyCart']);
@@ -188,6 +233,10 @@ Route::group(
     Route::get('/increase/Qty/{id}', [MyCartController::class , 'increase']);
     Route::get('/decrease/Qty/{id}', [MyCartController::class , 'decrease']);
 
+    // Apply Coupon
+    Route::post('/apply/coupon', [MyCartController::class , 'applyCoupon']);
+    Route::get('/coupon/calculation', [MyCartController::class , 'calculationCoupon']);
+    Route::get('/coupon/remove', [MyCartController::class , 'removeCoupon']);
 
 
 
