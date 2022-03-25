@@ -12,7 +12,10 @@ use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\AddCartController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\User\CashController;
+use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\MyCartController;
+use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\wishlistsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -224,6 +227,20 @@ Route::group(
         Route::post('/add/whishlist/{product_id}', [wishlistsController::class , 'addWhishlist']);
         Route::get('/remove/wishlist/{id}', [wishlistsController::class , 'removeWishlist']);
 
+        //// Stripe Order
+        Route::post('/stripe/order', [StripeController::class , 'stripeOrder'])->name('stripe.order');
+
+        //// Cash Order
+        Route::post('/cash/order', [CashController::class , 'cashOrder'])->name('cash.order');
+
+        //// View User Orders
+        Route::get('/my/orders', [StripeController::class , 'myOrders'])->name('my.orders');
+        Route::get('/order/details/{id}', [StripeController::class , 'orderDetails'])->name('order.details');
+        Route::get('/order/invoice/{id}', [StripeController::class , 'orderInvoice'])->name('order.invoice');
+
+
+
+
     });
 
     // My User Cart
@@ -237,6 +254,14 @@ Route::group(
     Route::post('/apply/coupon', [MyCartController::class , 'applyCoupon']);
     Route::get('/coupon/calculation', [MyCartController::class , 'calculationCoupon']);
     Route::get('/coupon/remove', [MyCartController::class , 'removeCoupon']);
+
+    // Checkout Page
+    Route::get('/checkout', [CheckoutController::class , 'index'])->name('checkout');
+    Route::get('district/ajax/{divition_id}' , [CheckoutController::class , 'districtAjax']);
+    Route::get('state/ajax/{district_id}' , [CheckoutController::class , 'stateAjax']);
+    Route::post('/checkout/store' , [CheckoutController::class , 'checkoutStore'])->name('checkout.store');
+
+
 
 
 

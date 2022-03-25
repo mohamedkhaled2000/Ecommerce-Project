@@ -12,7 +12,7 @@
                 <li><a href="{{ route('wishlist') }}"><i class="icon fa fa-heart"></i>{{__('masseges.Wishlist')}}</a></li>
                 @endauth
               <li><a href="{{ route('my_Cart') }}"><i class="icon fa fa-shopping-cart"></i>{{__('masseges.My Cart')}}</a></li>
-              <li><a href="#"><i class="icon fa fa-check"></i>{{__('masseges.Checkout')}}</a></li>
+              <li><a href="{{ route('checkout') }}"><i class="icon fa fa-check"></i>{{__('masseges.Checkout')}}</a></li>
               <li>
                   @auth
                   <a href="{{ url('/dashboard') }}"><i class="icon fa fa-user"></i>{{ Auth::user()->name }}</a>
@@ -108,7 +108,7 @@
                   <div class="clearfix cart-total">
                     <div class="pull-right"> <span class="text">Sub Total : </span ><span class='price'>$</span><span class='price' id="subTotal"></span> </div>
                     <div class="clearfix"></div>
-                    <a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">{{__('masseges.Checkout')}}</a> </div>
+                    <a href="{{ route('checkout') }}" class="btn btn-upper btn-primary btn-block m-t-20">{{__('masseges.Checkout')}}</a> </div>
                   <!-- /.cart-total-->
 
                 </li>

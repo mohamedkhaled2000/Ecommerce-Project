@@ -1,6 +1,8 @@
 @extends('admin.admin_master')
 
 @section('admin')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <div class="container-full">
     <div class="content-header">
         <div class="d-flex align-items-center">
@@ -106,9 +108,6 @@
                                         <label>Shipping District Name</label>
                                         <select class="form-control" name="district_id">
                                             <option value="" selected>Select District</option>
-                                            @foreach ($districts as $district)
-                                            <option value="{{ $district->id }}">{{ $district->district_name }}</option>
-                                            @endforeach
                                         </select>
                                     @error('district_id')
                                     <span class="text-danger">{{ $message }}</span>
@@ -141,4 +140,28 @@
     </section>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('select[name="divition_id"]').on('change', function(){
+          var divition_id = $(this).val();
+          if(divition_id) {
+              $.ajax({
+                  url: "{{  url('shipping-division/district/ajax') }}/"+divition_id,
+                  type:"GET",
+                  dataType:"json",
+                  success:function(data) {
+                      $('select[name="state_id"]').empty();
+                     var d =$('select[name="district_id"]').empty();
+                        $.each(data, function(key, value){
+                            $('select[name="district_id"]').append('<option value="'+ value.id +'">' + value.district_name + '</option>');
+                        });
+                  },
+              });
+          } else {
+              alert('danger');
+          }
+      });
+
+  });
+  </script>
 @endsection

@@ -118,15 +118,19 @@ class ShippingDivisionContriller extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function districtAjax($divition_id){
+        $ship = ShippingDistrict::where('divition_id',$divition_id)->orderBy('district_name','ASC')->get();
+        return json_encode($ship);
+    }
+
 
     ////// ShippingState
 
 
     public function stateView(){
         $divitions = ShippingDivision::orderBy('id','DESC')->get();
-        $districts = ShippingDistrict::orderBy('id','DESC')->get();
         $states = State::orderBy('id','DESC')->get();
-        return view('backend.shipping_divition.state_view',compact('divitions','districts','states'));
+        return view('backend.shipping_divition.state_view',compact('divitions','states'));
     }
 
     public function storestate(Request $request){

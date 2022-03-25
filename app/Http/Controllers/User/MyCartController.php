@@ -115,7 +115,7 @@ class MyCartController extends Controller
                 'coupon_name' => $coupon->coupon_name,
                 'coupon_discount' => $coupon->coupon_discount,
                 'discount_amount' => round(\Cart::session($userId)->getTotal() * ($coupon->coupon_discount / 100)),
-                'total_amount' => number_format(\Cart::session($userId)->getTotal() - (\Cart::session($userId)->getTotal() * $coupon->coupon_discount / 100))
+                'total_amount' => round(\Cart::session($userId)->getTotal() - (\Cart::session($userId)->getTotal() * $coupon->coupon_discount / 100))
             ]);
 
             return response()->json(['success'=>'Coupon Applied Successfly']);

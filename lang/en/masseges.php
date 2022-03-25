@@ -43,5 +43,6 @@ return [
     'OutStock'                  => 'OutStock',
     'Stock'                     => 'Stock',
     'Checkout'                  => 'Checkout',
-    'Shopping Cart'             => 'Shopping Cart'
+    'Shopping Cart'             => 'Shopping Cart',
+    'My Orders'                 => 'My Orders'
 ];
