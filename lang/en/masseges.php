@@ -44,5 +44,8 @@ return [
     'Stock'                     => 'Stock',
     'Checkout'                  => 'Checkout',
     'Shopping Cart'             => 'Shopping Cart',
-    'My Orders'                 => 'My Orders'
+    'My Orders'                 => 'My Orders',
+    'Returned Orders'           => 'Returned Orders',
+    'Canceled Orders'           => 'Canceled Orders',
+    'Blog'                      => 'Blog'
 ];

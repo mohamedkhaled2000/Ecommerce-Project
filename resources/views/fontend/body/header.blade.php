@@ -183,6 +183,7 @@
 
 
                   <li class="dropdown  navbar-right special-menu" style="float: {{ LaravelLocalization::getCurrentLocale() === 'en' ? 'right' : 'left' }}"> <a href="#">{{__('masseges.Todays offer')}}</a> </li>
+                  <li class="dropdown  navbar-right special-menu" style="float: {{ LaravelLocalization::getCurrentLocale() === 'en' ? 'right' : 'left' }}"> <a href="{{ route('user.blog') }}">{{__('masseges.Blog')}}</a> </li>
                 </ul>
                 <!-- /.navbar-nav -->
                 <div class="clearfix"></div>

@@ -166,6 +166,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Darryldecode\Cart\CartServiceProvider::class,
         Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -198,11 +199,13 @@ return [
     'aliases' => [
 
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
+        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class
 
     ],
 
     'aliases' => Facade::defaultAliases()->merge([
         'Image' => Intervention\Image\Facades\Image::class,
+        'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class
 
     ])->toArray(),
 

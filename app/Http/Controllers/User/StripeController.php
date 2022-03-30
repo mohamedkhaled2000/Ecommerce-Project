@@ -122,6 +122,16 @@ class StripeController extends Controller
         return view('fontend.users.order.order_view',compact('orders'));
     }
 
+    public function returnedOrders(){
+        $orders = Order::where('user_id',Auth::id())->where('status','return')->orderBy('id','DESC')->paginate(7);
+        return view('fontend.users.order.order_view',compact('orders'));
+    }
+
+    public function canceledOrders(){
+        $orders = Order::where('user_id',Auth::id())->where('status','cancel')->orderBy('id','DESC')->paginate(7);
+        return view('fontend.users.order.order_view',compact('orders'));
+    }
+
     public function orderDetails($id){
         $order = Order::where('id',$id)->where('user_id',Auth::id())->first();
         $order_item = OrderItem::where('order_id',$id)->orderBy('id','DESC')->get();
@@ -133,9 +143,9 @@ class StripeController extends Controller
         $order_item = OrderItem::where('order_id',$id)->orderBy('id','DESC')->get();
          return view('fontend.users.order.order_invoice',compact('order','order_item'));
 //        $pdf = PDF::loadView('fontend.users.order.order_invoice', compact('order','order_item'));
-//        return $pdf->download('invoice.pdf');
-
-
+//        return $pdf->stream('document.pdf');
     }
+
+
 
 }

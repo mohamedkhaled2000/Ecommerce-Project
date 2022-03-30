@@ -1,4 +1,7 @@
 @extends('fontend.home_master')
+@section('title')
+{{ $order->invoice_no }}
+@endsection
 
 @section('fontend')
     <div class="body-cotent">
@@ -140,7 +143,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{$item->qty }}</td>
-                                                <td>{{ number_format($item->price * $item->qty) }}</td>
+                                                <td>${{ number_format($item->price * $item->qty) }}</td>
                                             </tr>
                                         @endforeach
 
@@ -152,6 +155,19 @@
                         </div>
                     </div>
                 </div>
+
+                @if ($order->status === 'delivered')
+                    <form action="{{ route('return.order',$order->id) }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="label">Order Return Ression</label>
+                            <textarea name="return_reason" class="form-control" id="label" aria-describedby="emailHelp" rows="05">Return Ression</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Return</button><br><br>
+                    </form>
+
+                @endif
+
             </div>
         </div>
     </div>

@@ -9,6 +9,8 @@
             <a class="btn btn-primary btn-sm btn-block" href="{{ route('user.profile') }}">{{__('masseges.Profile Update')}}</a>
             <a class="btn btn-primary btn-sm btn-block" href="{{ route('user.change.password') }}">{{__('masseges.Change Password')}}</a>
             <a class="btn btn-primary btn-sm btn-block" href="{{ route('my.orders') }}">{{__('masseges.My Orders')}}</a>
+            <a class="btn btn-primary btn-sm btn-block" href="{{ route('returned.orders') }}">{{__('masseges.Returned Orders')}}</a>
+            <a class="btn btn-primary btn-sm btn-block" href="{{ route('canceled.orders') }}">{{__('masseges.Canceled Orders')}}</a>
             <a class="btn btn-danger btn-sm btn-block" href="{{ route('user.logout') }}">{{__('masseges.Logout')}}</a>
         </li>
     </ul>

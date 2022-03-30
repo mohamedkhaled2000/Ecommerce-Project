@@ -44,5 +44,9 @@ return [
     'Stock'                     => 'متوفر',
     'Checkout'                  => 'ادفع الان',
     'Shopping Cart'             => 'عربة التسوق',
-    'My Orders'                 => 'طلباتي'
+    'My Orders'                 => 'طلباتي',
+    'Returned Orders'           => 'الطلبات المرتجعة',
+    'Canceled Orders'           => 'الطلبات الملغاة',
+    'Blog'                      => 'مقالات'
+
 ];

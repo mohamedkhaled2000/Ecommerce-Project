@@ -2,15 +2,19 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
+use App\Http\Controllers\Backend\BlogCategoryController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CouponsController;
+use App\Http\Controllers\Backend\OrdersController;
 use App\Http\Controllers\Backend\ProductsConroller;
+use App\Http\Controllers\Backend\ReportController;
 use App\Http\Controllers\Backend\ShippingDivisionContriller;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\AddCartController;
+use App\Http\Controllers\Frontend\ShowBlogController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\User\CashController;
 use App\Http\Controllers\User\CheckoutController;
@@ -134,6 +138,30 @@ Route::middleware(['auth:admin'])->group(function(){
     });
 
 
+    // Blog Routes
+    Route::prefix('blog')->group(function(){
+
+        /// Blog Category
+        Route::get('/all' , [BlogCategoryController::class , 'allBlog'])->name('all.blog');
+        Route::post('/store' , [BlogCategoryController::class , 'storeBlog'])->name('blog.store');
+        Route::get('/edit/{id}' , [BlogCategoryController::class , 'editBlog'])->name('edit.blog');
+        Route::post('/update/{id}' , [BlogCategoryController::class , 'updateBlog'])->name('blog.update');
+        Route::get('/delete/{id}' , [BlogCategoryController::class , 'deleteBlog'])->name('blog.delete');
+
+        //// Blog Posts
+        Route::get('/posts' , [BlogCategoryController::class , 'allBlogPosts'])->name('all.posts');
+        Route::get('/add/posts' , [BlogCategoryController::class , 'addPost'])->name('add.post');
+        Route::post('/post/store' , [BlogCategoryController::class , 'storePost'])->name('post.store');
+        Route::get('/post/edit/{id}' , [BlogCategoryController::class , 'editPost'])->name('edit.post');
+        Route::post('/post/update/{id}' , [BlogCategoryController::class , 'updatePost'])->name('post.update');
+        Route::get('/post/delete/{id}' , [BlogCategoryController::class , 'deletePost'])->name('post.delete');
+
+        Route::post('/update/image/{id}' , [BlogCategoryController::class , 'updateImage'])->name('update.image');
+
+
+    });
+
+
     /// Coupons Routes
     Route::prefix('coupons')->group(function(){
         Route::get('/coupon', [CouponsController::class , 'couponView'])->name('manage.coupons');
@@ -174,6 +202,46 @@ Route::middleware(['auth:admin'])->group(function(){
 
     });
 
+    //// Orders Routes
+    Route::prefix('orders')->group(function(){
+        Route::get('/pending',[OrdersController::class,'pendingOrder'])->name('pending.orders');
+        Route::get('/pending/details/{id}',[OrdersController::class,'pendingDetails'])->name('pending.details');
+
+        /// All Action On Orders
+        Route::get('/confirmed',[OrdersController::class,'confirmedOrder'])->name('confirm.orders');
+        Route::get('/processing',[OrdersController::class,'processingOrder'])->name('processing.orders');
+        Route::get('/picked',[OrdersController::class,'pickedOrder'])->name('picked.orders');
+        Route::get('/delivered',[OrdersController::class,'deliveredOrder'])->name('delivered.orders');
+        Route::get('/shipping',[OrdersController::class,'shippingOrder'])->name('shipping.orders');
+        Route::get('/cancel',[OrdersController::class,'cancelOrder'])->name('cancel.orders');
+
+        /// Update Status
+        Route::get('/pending/{type}/{id}',[OrdersController::class,'pending_confirm'])->name('pending-confirm');
+
+        /// Order Admin Invoice
+        Route::get('/invoice/{id}',[OrdersController::class,'adminInvoice'])->name('admin.invoice');
+
+    });
+
+
+    //// Reports Routes
+    Route::prefix('report')->group(function(){
+        Route::get('/view',[ReportController::class,'reportView'])->name('all.report');
+
+        /// Searching
+        Route::post('/search/date',[ReportController::class,'reportByDate'])->name('date.search');
+        Route::post('/search/month',[ReportController::class,'reportByMonth'])->name('month.search');
+        Route::post('/search/year',[ReportController::class,'reportByYear'])->name('year.search');
+
+
+    });
+
+
+    //// Reports Routes
+    Route::prefix('users')->group(function(){
+        Route::get('/view',[AdminProfileController::class,'allUsers'])->name('all.users');
+    });
+
 }); // End of Admin Middelware
 
 
@@ -185,16 +253,19 @@ Route::group(
 
     // User Routes
 
-    Route::middleware(['auth:sanctum,web', 'verified'])->get('/dashboard', function () {
+    Route::middleware(['auth:sanctum,web', 'verified','user'])->get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
     Route::get('/' , [IndexController::class , 'index']);
-    Route::get('/user/logout' , [IndexController::class , 'userLogout'])->name('user.logout');
-    Route::get('/user/profile' , [IndexController::class , 'userProfile'])->name('user.profile');
-    Route::post('/update/user' , [IndexController::class , 'updateUserProfile'])->name('user.profile.store');
-    Route::get('/change/user/password' , [IndexController::class , 'updateUserPassword'])->name('user.change.password');
-    Route::post('/update/user/password' , [IndexController::class , 'changeUserPassword'])->name('user.update.password');
+
+    Route::middleware('user')->group(function(){
+        Route::get('/user/logout' , [IndexController::class , 'userLogout'])->name('user.logout');
+        Route::get('/user/profile' , [IndexController::class , 'userProfile'])->name('user.profile');
+        Route::post('/update/user' , [IndexController::class , 'updateUserProfile'])->name('user.profile.store');
+        Route::get('/change/user/password' , [IndexController::class , 'updateUserPassword'])->name('user.change.password');
+        Route::post('/update/user/password' , [IndexController::class , 'changeUserPassword'])->name('user.update.password');
+    });
 
     // Products Details
     Route::get('/product/{slug}/{id}' , [IndexController::class , 'productDetails']);
@@ -235,8 +306,14 @@ Route::group(
 
         //// View User Orders
         Route::get('/my/orders', [StripeController::class , 'myOrders'])->name('my.orders');
+        Route::get('/returned/orders', [StripeController::class , 'returnedOrders'])->name('returned.orders');
+        Route::get('/canceled/orders', [StripeController::class , 'canceledOrders'])->name('canceled.orders');
+
         Route::get('/order/details/{id}', [StripeController::class , 'orderDetails'])->name('order.details');
         Route::get('/order/invoice/{id}', [StripeController::class , 'orderInvoice'])->name('order.invoice');
+
+        //// Return Orders
+        Route::post('/order/return/{id}', [OrdersController::class , 'orderReturn'])->name('return.order');
 
 
 
@@ -261,10 +338,21 @@ Route::group(
     Route::get('state/ajax/{district_id}' , [CheckoutController::class , 'stateAjax']);
     Route::post('/checkout/store' , [CheckoutController::class , 'checkoutStore'])->name('checkout.store');
 
+    /// Blog Route Frontend
+    Route::get('/view', [ShowBlogController::class , 'index'])->name('user.blog');
+    Route::get('/{slug}/{id}', [ShowBlogController::class , 'postDetails']);
+
+    Route::get('/blog/category/post/{category_id}', [ShowBlogController::class , 'blogCategory']);
 
 
 
 
+
+
+});
+
+Route::fallback(function(){
+    return view('fontend.404');
 });
 
 

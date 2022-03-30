@@ -329,25 +329,27 @@
 
     <script>
         @if(Session::has('message'))
-        var type = "{{ Session::get('alert-type','info') }}"
-        switch(type){
-           case 'info':
-           toastr.info(" {{ Session::get('message') }} ");
-           break;
+            var type = "{{ Session::get('alert-type','info') }}"
+            switch(type){
+            case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
 
-           case 'success':
-           toastr.success(" {{ Session::get('message') }} ");
-           break;
+            case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
 
-           case 'warning':
-           toastr.warning(" {{ Session::get('message') }} ");
-           break;
+            case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
 
-           case 'error':
-           toastr.error(" {{ Session::get('message') }} ");
-           break;
-        }
+            case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break;
+            }
         @endif
+
+  /// Delete Row
 $(function(){
     $(document).on('click','#delete',function(e){
         e.preventDefault();
@@ -366,6 +368,164 @@ $(function(){
                 Swal.fire(
                 'Deleted!',
                 'Your file has been deleted.',
+                'success'
+                )
+            }
+            })
+    });
+});
+
+
+  /// Confirm Order
+$(function(){
+    $(document).on('click','#confirm',function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+            Swal.fire({
+            title: 'Are you sure to confirmed?',
+            text: "Once Confirmed, You Will Not able to Pending agian!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, confirmed it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link
+                Swal.fire(
+                'Confirm!',
+                'Your file has been confirmed.',
+                'success'
+                )
+            }
+            })
+    });
+});
+
+
+  /// Processing Order
+$(function(){
+    $(document).on('click','#confirm',function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+            Swal.fire({
+            title: 'Are you sure to Processing?',
+            text: "Once Processing, You Will Not able to Confirmed agian!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Processing it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link
+                Swal.fire(
+                'Processing!',
+                'Your file has been Processing.',
+                'success'
+                )
+            }
+            })
+    });
+});
+  /// Picked Order
+$(function(){
+    $(document).on('click','#picked',function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+            Swal.fire({
+            title: 'Are you sure to Picked?',
+            text: "Once Picked, You Will Not able to Processing agian!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Picked it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link
+                Swal.fire(
+                'Picked!',
+                'Your file has been Picked.',
+                'success'
+                )
+            }
+            })
+    });
+});
+
+  /// Shipping Order
+$(function(){
+    $(document).on('click','#shipping',function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+            Swal.fire({
+            title: 'Are you sure to Shipping?',
+            text: "Once Shipping, You Will Not able to Picked agian!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Shipping it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link
+                Swal.fire(
+                'Shipping!',
+                'Your file has been Shipping.',
+                'success'
+                )
+            }
+            })
+    });
+});
+
+
+  /// Delivered Order
+$(function(){
+    $(document).on('click','#delivered',function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+            Swal.fire({
+            title: 'Are you sure to Delivered?',
+            text: "Once Delivered, You Will Not able to Shipping agian!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Delivered it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link
+                Swal.fire(
+                'Delivered!',
+                'Your file has been Delivered.',
+                'success'
+                )
+            }
+            })
+    });
+});
+
+  /// Cancel Order
+$(function(){
+    $(document).on('click','#cancel',function(e){
+        e.preventDefault();
+        var link = $(this).attr("href");
+            Swal.fire({
+            title: 'Are you sure to Cancel?',
+            text: "Once Cancel, You Will Not able to Return agian!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Cancel it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link
+                Swal.fire(
+                'Cancel!',
+                'Your file has been Canceled.',
                 'success'
                 )
             }

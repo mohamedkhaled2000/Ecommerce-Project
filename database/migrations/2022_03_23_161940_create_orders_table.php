@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('order_date');
             $table->string('order_month');
             $table->string('order_year');
-            $table->string('confirmed_date')->nullable();
+            $table->string('confirm_date')->nullable();
             $table->string('processing_date')->nullable();
             $table->string('picked_date')->nullable();
             $table->string('shipped_date')->nullable();

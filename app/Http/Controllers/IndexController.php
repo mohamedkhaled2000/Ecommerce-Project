@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogCategory;
+use App\Models\BlogPost;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\MultiImage;
@@ -58,8 +60,11 @@ class IndexController extends Controller
         ->where('brand_id',$brand_skip_1->id)
         ->orderBy('id','DESC')->get();
 
+
+        $posts = BlogPost::latest()->get();
+
         return view('fontend.index',
-        compact('sliders','products','featureies','special_offers'
+        compact('sliders','products','featureies','special_offers' , 'posts'
         ,'special_deals','category_skip_0','product_skip_0','category_skip_1','product_skip_1','brand_skip_1','brand_product_skip_1'));
     }
 

@@ -1,5 +1,7 @@
 @extends('fontend.home_master')
-
+@section('title')
+    My Orders
+@endsection
 @section('fontend')
     <div class="body-cotent">
         <div class="container">
@@ -40,6 +42,10 @@
                                             <td>
                                                 <span class="badge badge-pill badge-info"
                                                     style="background: #50A5F5">{{ $order->status }}</span>
+                                                    @if ($order->status == 'return')
+                                                    <span class="badge badge-pill badge-info"
+                                                        style="background: red">Returned Request</span>
+                                                    @endif
                                             </td>
                                             <td>
                                                 <a href="{{ route('order.details', $order->id) }}"
