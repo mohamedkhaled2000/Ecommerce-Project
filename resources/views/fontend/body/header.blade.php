@@ -54,7 +54,10 @@
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-3 logo-holder">
             <!-- ============================================================= LOGO ============================================================= -->
-            <div class="logo"> <a href="{{ url('/') }}"> <img src="{{asset('fontend/assets/images/logo.png')}}" alt="logo"> </a> </div>
+            @php
+                $logo = App\Models\SiteSetting::first();
+            @endphp
+            <div class="logo"> <a href="{{ url('/') }}"> <img src="{{asset($logo->logo)}}" alt="logo"> </a> </div>
             <!-- /.logo -->
             <!-- ============================================================= LOGO : END ============================================================= --> </div>
           <!-- /.logo-holder -->

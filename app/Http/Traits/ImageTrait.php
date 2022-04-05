@@ -41,5 +41,13 @@ trait ImageTrait {
         return $slider_img_url;
     }
 
+    protected function updateLogo($photo,$path){
+        $brand_img = $photo;
+        $image_name = hexdec(uniqid()).'.'.$brand_img->getClientOriginalExtension();
+        Image::make($brand_img)->resize(139,36)->save($path.$image_name);
+        $slider_img_url = $path.$image_name;
+        return $slider_img_url;
+    }
+
 
 }

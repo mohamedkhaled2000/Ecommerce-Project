@@ -123,8 +123,8 @@ class StripeController extends Controller
     }
 
     public function returnedOrders(){
-        $orders = Order::where('user_id',Auth::id())->where('status','return')->orderBy('id','DESC')->paginate(7);
-        return view('fontend.users.order.order_view',compact('orders'));
+        $orders = Order::where('user_id',Auth::id())->where('return_order',1)->orderBy('id','DESC')->paginate(7);
+        return view('fontend.users.order.return_order',compact('orders'));
     }
 
     public function canceledOrders(){

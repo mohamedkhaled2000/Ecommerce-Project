@@ -37,10 +37,11 @@ return new class extends Migration
             $table->string('confirm_date')->nullable();
             $table->string('processing_date')->nullable();
             $table->string('picked_date')->nullable();
-            $table->string('shipped_date')->nullable();
+            $table->string('shipping_date')->nullable();
             $table->string('delivered_date')->nullable();
             $table->string('canacel_date')->nullable();
             $table->string('return_date')->nullable();
+            $table->string('return_order')->nullable();
             $table->string('return_reason')->nullable();
             $table->string('status');
             $table->timestamps();

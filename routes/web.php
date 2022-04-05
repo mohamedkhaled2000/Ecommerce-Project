@@ -9,7 +9,9 @@ use App\Http\Controllers\Backend\CouponsController;
 use App\Http\Controllers\Backend\OrdersController;
 use App\Http\Controllers\Backend\ProductsConroller;
 use App\Http\Controllers\Backend\ReportController;
+use App\Http\Controllers\Backend\ReturnCotroller;
 use App\Http\Controllers\Backend\ShippingDivisionContriller;
+use App\Http\Controllers\Backend\SiteSettingController;
 use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
@@ -240,6 +242,26 @@ Route::middleware(['auth:admin'])->group(function(){
     //// Reports Routes
     Route::prefix('users')->group(function(){
         Route::get('/view',[AdminProfileController::class,'allUsers'])->name('all.users');
+    });
+
+
+    //// Site Setting Routes
+    Route::prefix('setting')->group(function(){
+        Route::get('/site',[SiteSettingController::class,'siteSetting'])->name('site.setting');
+        Route::post('/site/update/{id}',[SiteSettingController::class,'updateSite'])->name('site.update');
+
+        /// SEO Routes
+        Route::get('/seo',[SiteSettingController::class,'seoSite'])->name('seo.setting');
+        Route::post('/seo/update/{id}',[SiteSettingController::class,'updateSeo'])->name('seo.update');
+    });
+
+
+    //// Return Orders Routes
+    Route::prefix('return')->group(function(){
+        Route::get('/view',[ReturnCotroller::class,'index'])->name('view.return');
+        Route::get('/all',[ReturnCotroller::class,'allRequest'])->name('all.request');
+        Route::get('/approve/{id}',[ReturnCotroller::class,'approveRequest'])->name('approve.returned');
+
     });
 
 }); // End of Admin Middelware

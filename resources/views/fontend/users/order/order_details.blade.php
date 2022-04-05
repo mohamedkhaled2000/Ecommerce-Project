@@ -157,6 +157,7 @@
                 </div>
 
                 @if ($order->status === 'delivered')
+                    @if ($order->return_order != 1)
                     <form action="{{ route('return.order',$order->id) }}" method="POST">
                         @csrf
                         <div class="form-group">
@@ -165,6 +166,8 @@
                         </div>
                         <button type="submit" class="btn btn-primary">Return</button><br><br>
                     </form>
+
+                    @endif
 
                 @endif
 

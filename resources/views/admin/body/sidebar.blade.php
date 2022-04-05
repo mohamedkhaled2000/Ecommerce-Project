@@ -99,6 +99,34 @@
           </ul>
         </li>
 
+        <li class="treeview {{ ($prefix == '/setting') ? 'active' : '' }}">
+          <a href="#">
+            <i data-feather="file"></i>
+            <span>Mange Setting</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class=" {{($routes == 'site.setting') ? 'active' : '' }}"><a href="{{ route('site.setting') }}"><i class="ti-more"></i>Site Settings</a></li>
+            <li class=" {{($routes == 'seo.setting') ? 'active' : '' }}"><a href="{{ route('seo.setting') }}"><i class="ti-more"></i>Seo Settings</a></li>
+          </ul>
+        </li>
+
+        <li class="treeview {{ ($prefix == '/return') ? 'active' : '' }}">
+          <a href="#">
+            <i data-feather="file"></i>
+            <span>Mange Reutned Orders</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class=" {{($routes == 'view.return') ? 'active' : '' }}"><a href="{{ route('view.return') }}"><i class="ti-more"></i>Return Orders</a></li>
+            <li class=" {{($routes == 'all.request') ? 'active' : '' }}"><a href="{{ route('all.request') }}"><i class="ti-more"></i>All Request</a></li>
+          </ul>
+        </li>
+
         <li class="header nav-small-cap">User Interface</li>
 
         <li class="treeview {{ ($prefix == '/coupons') ? 'active' : '' }}">
