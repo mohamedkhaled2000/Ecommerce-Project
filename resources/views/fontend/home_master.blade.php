@@ -40,8 +40,13 @@
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,600italic,700,700italic,800' rel='stylesheet' type='text/css'>
 <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 <script src="https://js.stripe.com/v3/"></script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-6256f219c3ca36b6"></script>
+
 </head>
 <body class="cnt-home">
+
+
 @include('fontend.body.header')
 
 <div class="body-content outer-top-xs" id="top-banner-and-menu">
@@ -690,6 +695,39 @@
     }
 
     </script>
+
+<script>
+    $(document).ready(function(){
+        $("#search").on('keyup',function(){
+
+            let text = $('#search').val();
+
+            if(text.length > 0){
+                $.ajax({
+                        url: "{{ url('/search') }}",
+                        data: {
+                            search:text
+                        },
+                        method: 'post',
+                        beforSend: function(request){
+                            return request.setReuestHeader('X-CSRF-Token',("meta[name='csrf_token']"))
+                        },
+                        success: function(result){
+
+                            $('#searchresult').html(result)
+                        }
+                    });
+            }
+
+            if(text.length < 1){
+                $('#searchresult').html("")
+            }
+
+
+
+        });
+    });
+</script>
 
 {{-- ///// SPA ///// --}}
 {{-- <script src="{{asset('js/app.js')}}"></script> --}}

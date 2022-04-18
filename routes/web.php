@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Backend\AdminProfileController;
+use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Backend\BlogCategoryController;
 use App\Http\Controllers\Backend\BrandController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -16,11 +17,13 @@ use App\Http\Controllers\Backend\SliderController;
 use App\Http\Controllers\Backend\SubCategoryController;
 use App\Http\Controllers\Backend\SubSubCategoryController;
 use App\Http\Controllers\Frontend\AddCartController;
+use App\Http\Controllers\Frontend\SearchCotroller;
 use App\Http\Controllers\Frontend\ShowBlogController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\User\CashController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\User\MyCartController;
+use App\Http\Controllers\User\ReviewController;
 use App\Http\Controllers\User\StripeController;
 use App\Http\Controllers\User\wishlistsController;
 use Illuminate\Support\Facades\Auth;
@@ -64,18 +67,17 @@ Route::middleware(['auth:admin'])->group(function(){
 Route::middleware(['auth:admin'])->group(function(){
 
     // Brand Routes
-    Route::prefix('brand')->group(function(){
+    Route::prefix('brand')->middleware('role:brand')->group(function(){
         Route::get('/view' , [BrandController::class , 'viewBrand'])->name('all.brand');
         Route::post('/store' , [BrandController::class , 'storeBrand'])->name('brand.store');
         Route::get('/edit/{id}' , [BrandController::class , 'editBrand'])->name('brand.edit');
         Route::post('/update/{id}' , [BrandController::class , 'updateBrand'])->name('brand.update');
         Route::get('/delete/{id}' , [BrandController::class , 'deleteBrand'])->name('brand.delete');
-
     });
 
 
     // Category Routes
-    Route::prefix('category')->group(function(){
+    Route::prefix('category')->middleware('role:category')->group(function(){
 
         Route::get('/view' , [CategoryController::class , 'viewCategory'])->name('all.category');
         Route::post('/store' , [CategoryController::class , 'storeCategory'])->name('category.store');
@@ -102,7 +104,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     // Products Routes
-    Route::prefix('product')->group(function(){
+    Route::prefix('product')->middleware('role:product')->group(function(){
 
         Route::get('/add' , [ProductsConroller::class , 'addProduct'])->name('add.product');
         Route::get('/sub_subcategory/ajax/{subcategory_id}' , [ProductsConroller::class , 'sub_subCategoryAjax']);
@@ -127,7 +129,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
     // Sliders Routes
 
-    Route::prefix('slider')->group(function(){
+    Route::prefix('slider')->middleware('role:slider')->group(function(){
         Route::get('/all' , [SliderController::class , 'allSlider'])->name('all.sliders');
         Route::post('/store' , [SliderController::class , 'storeSlider'])->name('slider.store');
         Route::get('/inActive/{id}' , [SliderController::class , 'inActiveSlider'])->name('inactive.slider');
@@ -141,7 +143,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     // Blog Routes
-    Route::prefix('blog')->group(function(){
+    Route::prefix('blog')->middleware('role:blog')->group(function(){
 
         /// Blog Category
         Route::get('/all' , [BlogCategoryController::class , 'allBlog'])->name('all.blog');
@@ -165,7 +167,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     /// Coupons Routes
-    Route::prefix('coupons')->group(function(){
+    Route::prefix('coupons')->middleware('role:coupons')->group(function(){
         Route::get('/coupon', [CouponsController::class , 'couponView'])->name('manage.coupons');
         Route::post('/store' , [CouponsController::class , 'storeCoupon'])->name('coupon.store');
         Route::get('/edit/{id}' , [CouponsController::class , 'editCoupon'])->name('coupon.edit');
@@ -176,7 +178,7 @@ Route::middleware(['auth:admin'])->group(function(){
     });
 
     /// Shipping Area Routes
-    Route::prefix('shipping-division')->group(function(){
+    Route::prefix('shipping-division')->middleware('role:shipping-division')->group(function(){
 
         //// Shipping Division Routes
         Route::get('/view', [ShippingDivisionContriller::class , 'divisionView'])->name('manage.division');
@@ -205,7 +207,7 @@ Route::middleware(['auth:admin'])->group(function(){
     });
 
     //// Orders Routes
-    Route::prefix('orders')->group(function(){
+    Route::prefix('orders')->middleware('role:orders')->group(function(){
         Route::get('/pending',[OrdersController::class,'pendingOrder'])->name('pending.orders');
         Route::get('/pending/details/{id}',[OrdersController::class,'pendingDetails'])->name('pending.details');
 
@@ -227,7 +229,7 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     //// Reports Routes
-    Route::prefix('report')->group(function(){
+    Route::prefix('report')->middleware('role:report')->group(function(){
         Route::get('/view',[ReportController::class,'reportView'])->name('all.report');
 
         /// Searching
@@ -240,13 +242,13 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     //// Reports Routes
-    Route::prefix('users')->group(function(){
+    Route::prefix('users')->middleware('role:users')->group(function(){
         Route::get('/view',[AdminProfileController::class,'allUsers'])->name('all.users');
     });
 
 
     //// Site Setting Routes
-    Route::prefix('setting')->group(function(){
+    Route::prefix('setting')->middleware('role:setting')->group(function(){
         Route::get('/site',[SiteSettingController::class,'siteSetting'])->name('site.setting');
         Route::post('/site/update/{id}',[SiteSettingController::class,'updateSite'])->name('site.update');
 
@@ -257,10 +259,56 @@ Route::middleware(['auth:admin'])->group(function(){
 
 
     //// Return Orders Routes
-    Route::prefix('return')->group(function(){
+    Route::prefix('return')->middleware('role:return')->group(function(){
         Route::get('/view',[ReturnCotroller::class,'index'])->name('view.return');
         Route::get('/all',[ReturnCotroller::class,'allRequest'])->name('all.request');
         Route::get('/approve/{id}',[ReturnCotroller::class,'approveRequest'])->name('approve.returned');
+
+    });
+
+
+    //// Reviews Request Routes
+    Route::prefix('reviews')->middleware('role:reviews')->group(function(){
+        Route::get('/pending',[ReviewController::class,'pending'])->name('pending.reviews');
+        Route::get('/publish',[ReviewController::class,'publish'])->name('publish.review');
+        Route::get('/approve/{id}',[ReviewController::class,'approveRequest'])->name('approve.review');
+        Route::get('/delete/{id}',[ReviewController::class,'deleteRequest'])->name('delete.review');
+
+    });
+
+
+    //// Stock Product Routes
+    Route::prefix('stock')->middleware('role:stock')->group(function(){
+        Route::get('/product/all' , [ProductsConroller::class , 'allStockProduct'])->name('product.stock');
+    });
+
+
+    //// Admin Role Routes
+    Route::prefix('adminuserrow')->middleware('role:adminuserrow')->group(function(){
+
+        /// Roles Routes
+        Route::prefix('role')->group(function(){
+
+            Route::get('/all' , [AdminUserController::class , 'allRole'])->name('all.roles');
+            Route::get('/add' , [AdminUserController::class , 'addRole'])->name('create.role');
+            Route::post('/store' , [AdminUserController::class , 'storeRole'])->name('store.role');
+            Route::get('/edit/{id}' , [AdminUserController::class , 'editRole'])->name('edit.role');
+            Route::post('/update/{id}' , [AdminUserController::class , 'updateRole'])->name('update.role');
+            Route::get('/delete/{id}' , [AdminUserController::class , 'deleteRole'])->name('delete.role');
+
+        });
+
+        /// Admins Routes
+        Route::prefix('admin')->group(function(){
+
+            Route::get('/all' , [AdminUserController::class , 'allAdmin'])->name('all.admin');
+            Route::get('/add' , [AdminUserController::class , 'addAdmin'])->name('create.admin');
+            Route::post('/store' , [AdminUserController::class , 'storeAdmin'])->name('store.admin');
+            Route::get('/edit/{id}' , [AdminUserController::class , 'editAdmin'])->name('edit.admin');
+            Route::post('/update/{id}' , [AdminUserController::class , 'updateAdmin'])->name('update.admin');
+            Route::get('/delete/{id}' , [AdminUserController::class , 'deleteAdmin'])->name('delete.admin');
+
+        });
 
     });
 
@@ -299,6 +347,7 @@ Route::group(
     // Product Tags
     Route::get('/subCategory/{slug}/{id}' , [IndexController::class , 'subCategoryView']);
     Route::get('/sub_subCategory/{slug}/{id}' , [IndexController::class , 'sub_subCategoryView']);
+    Route::get('/Category/{slug}/{id}' , [IndexController::class , 'CategoryView']);
 
     // Product View Model
     Route::get('/product/view/model/{id}' , [IndexController::class , 'productViewModel']);
@@ -311,6 +360,9 @@ Route::group(
 
     // Remove Mini Cart
     Route::get('/minicart/product-remove/{rowid}', [AddCartController::class , 'removeMiniCart']);
+
+
+
 
     // Middellware User
     Route::middleware('auth')->group(function(){
@@ -336,6 +388,13 @@ Route::group(
 
         //// Return Orders
         Route::post('/order/return/{id}', [OrdersController::class , 'orderReturn'])->name('return.order');
+
+        //// Review Orders
+        Route::post('/user/review', [ReviewController::class , 'submitReview'])->name('submit.review');
+
+
+        //// Tracking Orders
+        Route::post('/order/track', [ShowBlogController::class , 'trackingOrder'])->name('order.tracking');
 
 
 
@@ -366,6 +425,10 @@ Route::group(
 
     Route::get('/blog/category/post/{category_id}', [ShowBlogController::class , 'blogCategory']);
 
+
+    /// Search Routes
+    Route::post('/all/result', [SearchCotroller::class , 'searchProduct'])->name('product.search');
+    Route::post('/search', [SearchCotroller::class , 'search']);
 
 
 

@@ -23,11 +23,8 @@ class Admin extends Authenticatable
      *
      * @var string[]
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -58,4 +55,8 @@ class Admin extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function role(){
+        return $this->belongsTo(Role::class,'role_id','id');
+    }
 }

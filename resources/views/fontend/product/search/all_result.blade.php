@@ -11,8 +11,9 @@
       <div class="breadcrumb-inner">
         <ul class="list-inline list-unstyled">
           <li><a href="{{url('/')}}">{{__('masseges.Home')}}</a></li>
+
           <li class='active'>
-              {{ $slug }}
+              {{ $item }}
           </li>
 
         </ul>
@@ -275,7 +276,7 @@
               <div class="tab-pane active " id="grid-container">
                 <div class="category-product">
                   <div class="row">
-                @foreach ($tags as $product)
+                @foreach ($products as $product)
 
                     @php
                         $amount = $product->selling_price - $product->discount_price;
@@ -360,7 +361,7 @@
 
               <div class="tab-pane "  id="list-container">
                 <div class="category-product">
-                @foreach ($tags as $product)
+                @foreach ($products as $product)
                     @php
                         $amount = $product->selling_price - $product->discount_price;
                         $discount = 100 - ($amount / $product->selling_price) * 100;
@@ -434,7 +435,7 @@
             <div class="clearfix filters-container">
               <div class="text-right">
                 <div class="pagination-container">
-                    {{ $tags->links() }}
+                    {{ $products->links() }}
                   <!-- /.list-inline -->
                 </div>
                 <!-- /.pagination-container --> </div>

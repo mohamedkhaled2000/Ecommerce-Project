@@ -7,9 +7,13 @@
         <div class="header-top-inner">
           <div class="cnt-account">
             <ul class="list-unstyled">
+                    @if (Auth::guard('admin')->check())
+                        <li><a href="{{ url('admin/dashboard') }}">Dashboard</a></li>
+                    @endif
                 @auth
-
-                <li><a href="{{ route('wishlist') }}"><i class="icon fa fa-heart"></i>{{__('masseges.Wishlist')}}</a></li>
+                    <li><a href="{{ route('wishlist') }}"><i class="icon fa fa-heart"></i>{{__('masseges.Wishlist')}}</a></li>
+                    <li><a href="" type="button" data-toggle="modal" data-target="#exampleModa5">
+                        <i class="icon fa fa-check"></i>Track Order</a></li>
                 @endauth
               <li><a href="{{ route('my_Cart') }}"><i class="icon fa fa-shopping-cart"></i>{{__('masseges.My Cart')}}</a></li>
               <li><a href="{{ route('checkout') }}"><i class="icon fa fa-check"></i>{{__('masseges.Checkout')}}</a></li>
@@ -66,24 +70,32 @@
             <!-- /.contact-row -->
             <!-- ============================================================= SEARCH AREA ============================================================= -->
             <div class="search-area">
-              <form>
+              <form action="{{ route('product.search') }}" method="POST">
+                @csrf
                 <div class="control-group">
                   <ul class="categories-filter animate-dropdown">
                     <li class="dropdown"> <a class="dropdown-toggle"  data-toggle="dropdown" href="category.html">{{ __('masseges.Categories') }} <b class="caret"></b></a>
                       <ul class="dropdown-menu" role="menu" >
                           @php
-                              $categories = App\Models\Category::select('id','category_name_'.LaravelLocalization::getCurrentLocale().' as catName' )
+                              $categories = App\Models\Category::select('id','category_name_'.LaravelLocalization::getCurrentLocale().' as catName', 'category_slug_en')
                               ->get();
                           @endphp
                         @foreach ($categories as $category)
-                        <li role="presentation"><a role="menuitem" tabindex="-1" href="category.html">- {{ $category->catName }}</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="{{url('Category/'.$category->category_slug_en.'/'.$category->id)}}">
+                                - {{ $category->catName }}</a></li>
                         @endforeach
                     </ul>
                     </li>
                   </ul>
-                  <input class="search-field" placeholder="{{ __('masseges.Search here') }}" />
-                  <a class="search-button" href="#" ></a> </div>
+                  <input class="search-field" name="search" onfocus="search_result_show()" onblur="search_result_hide()" placeholder="{{ __('masseges.Search here') }}" id="search" autocomplete="off"/>
+
+                  <button class="search-button" type="submit" ></button> </div>
+
               </form>
+                  <div class="body-box" id="searchresult" >
+
+                  </div>
+
             </div>
             <!-- /.search-area -->
             <!-- ============================================================= SEARCH AREA : END ============================================================= --> </div>
@@ -208,5 +220,67 @@
 
   </header>
 
+
+  <div class="modal fade" id="exampleModa5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Tracking Order</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{{ route('order.tracking') }}" method="POST">
+            @csrf
+            <div class="form-group">
+                <label for="e1">Invoice Number</label>
+                <input type="text" name="invoice_no"  class="form-control">
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger">Track Now</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+  <style>
+
+      .search-area{
+           position: relative
+      }
+    #searchresult {
+        position: absolute;
+        top : 100%;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        border-radius: 10px;
+        background: #ffffff;
+        margin-top: 10px
+
+    }
+    #searchresult li {
+        padding: 20px
+    }
+
+  </style>
+
+  
+
+  <script>
+
+    function search_result_show(){
+        $('#searchresult').slideDown();
+    }
+    function search_result_hide(){
+        $('#searchresult').slideUp();
+    }
+</script>
   <!-- ============================================== HEADER : END ============================================== -->
 

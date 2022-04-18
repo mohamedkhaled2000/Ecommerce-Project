@@ -1,5 +1,5 @@
 @php
-    $admins = App\Models\Admin::find(1);
+    $admins = App\Models\Admin::find(Auth::id());
 @endphp
 <header class="main-header">
     <!-- Header Navbar -->
@@ -107,7 +107,7 @@
 	      <!-- User Account-->
           <li class="dropdown user user-menu">
 			<a href="#" class="waves-effect waves-light rounded dropdown-toggle p-0" data-toggle="dropdown" title="User">
-				<img src="{{ $admins->profile_photo_path == null ? url('upload/admin_images/no_image.jpg') : url('upload/admin_images/'.$admins->profile_photo_path) }}" alt="">
+				<img src="{{ $admins->profile_photo_path == null ? url('upload/admin_images/no_image.jpg') : url($admins->profile_photo_path) }}" alt="">
 			</a>
 			<ul class="dropdown-menu animated flipInX">
 			  <li class="user-body">

@@ -13,7 +13,7 @@
                @csrf
                 <div class="box-body">
                     <div class="form-group">
-                        <img class="rounded-circle" id="showImage" style="width: 150px; height:150px; margin-left: 50px" src="{{ $admin->profile_photo_path == null ? url('upload/admin_images/no_image.jpg') : url('upload/admin_images/'.$admin->profile_photo_path) }}" alt="">
+                        <img class="rounded-circle" id="showImage" style="width: 150px; height:150px; margin-left: 50px" src="{{ $admin->profile_photo_path == null ? url('upload/admin_images/no_image.jpg') : url($admin->profile_photo_path) }}" alt="">
                     </div>
                     <div class="form-group">
                         <label>User Name</label>

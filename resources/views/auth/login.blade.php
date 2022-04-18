@@ -27,8 +27,8 @@
 	<form method="POST" action="{{ isset($guard) ? url($guard.'/login') : route('login') }}" class="register-form outer-top-xs" role="form">
 		@csrf
         <div class="form-group">
-		    <label class="info-title" for="exampleInputEmail1">Email Address <span>*</span></label>
-		    <input type="email" name="email"  class="form-control unicase-form-control text-input" id="email" :value="old('email')" required>
+		    <label class="info-title" for="exampleInputEmail1">Email / Phone<span>*</span></label>
+		    <input type="text" name="login"  class="form-control unicase-form-control text-input" id="email" :value="old('email')" required>
 		</div>
 	  	<div class="form-group">
 		    <label class="info-title" for="exampleInputPassword1">Password <span>*</span></label>

@@ -162,6 +162,12 @@ class IndexController extends Controller
         return view('fontend.product.subCategoryView',compact('tags','categories','slug'));
     }
 
+    public function CategoryView($slug,$id){
+        $tags = Product::where('status',1)->where('category_id',$id)->paginate(5);
+        $categories = Category::orderBy('id','DESC')->get();
+        return view('fontend.product.subCategoryView',compact('tags','categories','slug'));
+    }
+
     public function productViewModel($id){
         $product = Product::with('category','brand')->findOrFail($id);
         $product_color_en = explode(',',$product->product_color_en);

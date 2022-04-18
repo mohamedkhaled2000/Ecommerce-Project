@@ -248,6 +248,12 @@ class ProductsConroller extends Controller
         return redirect()->back()->with($notification);
     }
 
+    public function allStockProduct(){
+        $products = Product::select('id','product_name_en','selling_price','product_qty','discount_price','status','product_thambnail')
+        ->latest()->get();
+        return view('backend.stock.all_products',compact('products'));
+    }
+
 
 }
 

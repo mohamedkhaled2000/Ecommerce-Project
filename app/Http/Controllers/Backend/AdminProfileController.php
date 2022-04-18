@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 class AdminProfileController extends Controller
 {
     public function adminProfile(){
-        $admins = Admin::find(1);
+        $admins = Admin::find(Auth::id());
         return view('admin.admin_profile_view',compact('admins'));
     }
 
@@ -52,9 +52,9 @@ class AdminProfileController extends Controller
             'password' => 'required|confirmed'
         ]);
 
-        $dataPass = Admin::find(1)->password;
+        $dataPass = Admin::find(Auth::id())->password;
         if(Hash::check($request->current_pass,$dataPass)){
-            $pass = Admin::find(1);
+            $pass = Admin::find(Auth::id());
             $pass->password = Hash::make($request->password);
             $pass->save();
             Auth::logout();

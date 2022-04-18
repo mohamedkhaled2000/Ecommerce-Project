@@ -39,21 +39,18 @@
               </p>
 
               <div class="social-media">
-                <span>share post:</span>
-                <a href="#"><i class="fa fa-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-linkedin"></i></a>
-                <a href=""><i class="fa fa-rss"></i></a>
-                <a href="" class="hidden-xs"
-                  ><i class="fa fa-pinterest"></i
-                ></a>
+                <span>share post:</span><br><br>
+
+                <!-- Go to www.addthis.com/dashboard to customize your tools -->
+                <div class="addthis_inline_share_toolbox"></div>
+
               </div>
             </div>
             <div class="blog-post-author-details wow fadeInUp">
               <div class="row">
                 <div class="col-md-2">
                   <img
-                    src="assets/images/testimonials/member3.png"
+                    src="{{asset('fontend/assets/images/testimonials/member3.png')}}"
                     alt="Responsive image"
                     class="img-circle img-responsive"
                   />

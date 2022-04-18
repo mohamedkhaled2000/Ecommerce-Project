@@ -14,6 +14,7 @@
 $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocalization::getCurrentLocale() . ' as catName', 'category_icon')->get();
 @endphp
 
+
         <!-- ============================================== HOT DEALS ============================================== -->
         @include('fontend.product.hot_deals')
         <!-- ============================================== HOT DEALS: END ============================================== -->
@@ -293,6 +294,15 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                 @php
                                     $amount = $product->selling_price - $product->discount_price;
                                     $discount = 100 - ($amount / $product->selling_price) * 100;
+
+                                    $reviews = App\Models\Review::where('product_id',$product->id)
+                                                    ->where('status',1)
+                                                    ->latest()
+                                                    ->get();
+
+                                    if ($reviews->count() > 0) {
+                                        $review_rate = $reviews->sum('product_rating') / $reviews->count();
+                                    }
                                 @endphp
                                 <div class="item item-carousel">
                                     <div class="products">
@@ -314,7 +324,22 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                                 <h3 class="name"><a
                                                         href="{{ url('/product/' . $product->proSlug . '/' . $product->id) }}">{{ $product->ProName }}</a>
                                                 </h3>
-                                                <div class="rating rateit-small"></div>
+                                                <div class="rating">
+                                                    @if ($reviews->count() != 0)
+                                                        @for ($i = 1 ; $i <= number_format($review_rate); $i++)
+                                                            <i class="fa fa-star" style="color: #ffe400"></i>
+                                                        @endfor
+                                                        @for ($j = number_format($review_rate)+1; $j <= 5; $j++ )
+                                                            <i class="fa fa-star"></i>
+                                                        @endfor
+
+                                                    @else
+                                                        @for ($i = 1; $i <= 5; $i++ )
+                                                            <i class="fa fa-star"></i>
+                                                        @endfor
+                                                    @endif
+
+                                                </div>
                                                 <div class="description"></div>
                                                 <div class="product-price"> <span class="price">
                                                         ${{ $product->selling_price }} </span> <span
@@ -380,6 +405,16 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                     @php
                                         $amount = $pro->selling_price - $pro->discount_price;
                                         $discount = 100 - ($amount / $pro->selling_price) * 100;
+
+
+                                    $reviews = App\Models\Review::where('product_id',$pro->id)
+                                                    ->where('status',1)
+                                                    ->latest()
+                                                    ->get();
+
+                                    if ($reviews->count() > 0) {
+                                        $review_rate = $reviews->sum('product_rating') / $reviews->count();
+                                    }
                                     @endphp
                                     <div class="item item-carousel">
                                         <div class="products">
@@ -401,8 +436,22 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                                     <h3 class="name"><a
                                                             href="{{ url('/product/' . $pro->proSlug . '/' . $pro->id) }}">{{ $pro->ProName }}</a>
                                                     </h3>
-                                                    <div class="rating rateit-small"></div>
-                                                    <div class="description"></div>
+                                                    <div class="rating">
+                                                        @if ($reviews->count() != 0)
+                                                            @for ($i = 1 ; $i <= number_format($review_rate); $i++)
+                                                                <i class="fa fa-star" style="color: #ffe400"></i>
+                                                            @endfor
+                                                            @for ($j = number_format($review_rate)+1; $j <= 5; $j++ )
+                                                                <i class="fa fa-star"></i>
+                                                            @endfor
+
+                                                        @else
+                                                            @for ($i = 1; $i <= 5; $i++ )
+                                                                <i class="fa fa-star"></i>
+                                                            @endfor
+                                                        @endif
+
+                                                    </div>                                                    <div class="description"></div>
                                                     <div class="product-price"> <span class="price">
                                                             ${{ $pro->selling_price }} </span> <span
                                                             class="price-before-discount"
@@ -494,6 +543,16 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                     @php
                         $amount = $featured->selling_price - $featured->discount_price;
                         $discount = 100 - ($amount / $featured->selling_price) * 100;
+                        $reviews = App\Models\Review::where('product_id',$featured->id)
+                                                    ->where('status',1)
+                                                    ->latest()
+                                                    ->get();
+
+                                    if ($reviews->count() > 0) {
+                                        $review_rate = $reviews->sum('product_rating') / $reviews->count();
+                                    }
+
+
                     @endphp
                     <div class="item item-carousel">
                         <div class="products">
@@ -514,8 +573,22 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                     <h3 class="name"><a
                                             href="{{ url('/product/' . $featured->proSlug . '/' . $featured->id) }}">{{ $featured->ProName }}</a>
                                     </h3>
-                                    <div class="rating rateit-small"></div>
-                                    <div class="description"></div>
+                                    <div class="rating">
+                                        @if ($reviews->count() != 0)
+                                            @for ($i = 1 ; $i <= number_format($review_rate); $i++)
+                                                <i class="fa fa-star" style="color: #ffe400"></i>
+                                            @endfor
+                                            @for ($j = number_format($review_rate)+1; $j <= 5; $j++ )
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+
+                                        @else
+                                            @for ($i = 1; $i <= 5; $i++ )
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+                                        @endif
+
+                                    </div>                                     <div class="description"></div>
                                     <div class="product-price"> <span class="price"> $
                                             {{ $featured->selling_price }} </span> <span class="price-before-discount"
                                             style="color: rgb(126, 125, 125);display: {{ $amount == $featured->selling_price ? 'none' : '' }}">$
@@ -573,6 +646,15 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                     @php
                         $amount = $featured->selling_price - $featured->discount_price;
                         $discount = 100 - ($amount / $featured->selling_price) * 100;
+
+                        $reviews = App\Models\Review::where('product_id',$featured->id)
+                                                    ->where('status',1)
+                                                    ->latest()
+                                                    ->get();
+
+                                    if ($reviews->count() > 0) {
+                                        $review_rate = $reviews->sum('product_rating') / $reviews->count();
+                                    }
                     @endphp
                     <div class="item item-carousel">
                         <div class="products">
@@ -593,8 +675,22 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                     <h3 class="name"><a
                                             href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
                                     </h3>
-                                    <div class="rating rateit-small"></div>
-                                    <div class="description"></div>
+                                    <div class="rating">
+                                        @if ($reviews->count() != 0)
+                                            @for ($i = 1 ; $i <= number_format($review_rate); $i++)
+                                                <i class="fa fa-star" style="color: #ffe400"></i>
+                                            @endfor
+                                            @for ($j = number_format($review_rate)+1; $j <= 5; $j++ )
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+
+                                        @else
+                                            @for ($i = 1; $i <= 5; $i++ )
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+                                        @endif
+
+                                    </div>                                     <div class="description"></div>
                                     <div class="product-price"> <span class="price"> $
                                             {{ $featured->selling_price }} </span> <span class="price-before-discount"
                                             style="color: rgb(126, 125, 125);display: {{ $amount == $featured->selling_price ? 'none' : '' }}">$
@@ -652,6 +748,16 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                     @php
                         $amount = $featured->selling_price - $featured->discount_price;
                         $discount = 100 - ($amount / $featured->selling_price) * 100;
+
+                        $reviews = App\Models\Review::where('product_id',$featured->id)
+                                                    ->where('status',1)
+                                                    ->latest()
+                                                    ->get();
+
+                                    if ($reviews->count() > 0) {
+                                        $review_rate = $reviews->sum('product_rating') / $reviews->count();
+                                    }
+
                     @endphp
                     <div class="item item-carousel">
                         <div class="products">
@@ -672,8 +778,22 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                     <h3 class="name"><a
                                             href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
                                     </h3>
-                                    <div class="rating rateit-small"></div>
-                                    <div class="description"></div>
+                                    <div class="rating">
+                                        @if ($reviews->count() != 0)
+                                            @for ($i = 1 ; $i <= number_format($review_rate); $i++)
+                                                <i class="fa fa-star" style="color: #ffe400"></i>
+                                            @endfor
+                                            @for ($j = number_format($review_rate)+1; $j <= 5; $j++ )
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+
+                                        @else
+                                            @for ($i = 1; $i <= 5; $i++ )
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+                                        @endif
+
+                                    </div>                                     <div class="description"></div>
                                     <div class="product-price"> <span class="price"> $
                                             {{ $featured->selling_price }} </span> <span class="price-before-discount"
                                             style="color: rgb(126, 125, 125);display: {{ $amount == $featured->selling_price ? 'none' : '' }}">$
@@ -759,6 +879,16 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                     @php
                         $amount = $featured->selling_price - $featured->discount_price;
                         $discount = 100 - ($amount / $featured->selling_price) * 100;
+
+                        $reviews = App\Models\Review::where('product_id',$featured->id)
+                                                    ->where('status',1)
+                                                    ->latest()
+                                                    ->get();
+
+                                    if ($reviews->count() > 0) {
+                                        $review_rate = $reviews->sum('product_rating') / $reviews->count();
+                                    }
+
                     @endphp
                     <div class="item item-carousel">
                         <div class="products">
@@ -779,8 +909,22 @@ $categories = App\Models\Category::select('id', 'category_name_' . LaravelLocali
                                     <h3 class="name"><a
                                             href="{{ url('/product/' . $featured->product_slug_en . '/' . $featured->id) }}">{{ LaravelLocalization::getCurrentLocale() === 'ar' ? $featured->product_name_ar : $featured->product_name_en }}</a>
                                     </h3>
-                                    <div class="rating rateit-small"></div>
-                                    <div class="description"></div>
+                                    <div class="rating">
+                                        @if ($reviews->count() != 0)
+                                            @for ($i = 1 ; $i <= number_format($review_rate); $i++)
+                                                <i class="fa fa-star" style="color: #ffe400"></i>
+                                            @endfor
+                                            @for ($j = number_format($review_rate)+1; $j <= 5; $j++ )
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+
+                                        @else
+                                            @for ($i = 1; $i <= 5; $i++ )
+                                                <i class="fa fa-star"></i>
+                                            @endfor
+                                        @endif
+
+                                    </div>                                     <div class="description"></div>
                                     <div class="product-price"> <span class="price"> $
                                             {{ $featured->selling_price }} </span> <span class="price-before-discount"
                                             style="color: rgb(126, 125, 125);display: {{ $amount == $featured->selling_price ? 'none' : '' }}">$
