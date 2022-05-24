@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 use App\Http\Traits\ImageTrait;
-
+use Illuminate\Support\Facades\File;
 
 class SliderController extends Controller
 {
@@ -83,7 +83,7 @@ class SliderController extends Controller
             ]);
 
             $slider = Slider::findOrFail($id);
-            unlink($slider->slider_image);
+            File::delete($slider->slider_image);
 
             $slider_img_url = $this->saveSlider($request->file('slider_image'),'upload/slider_images/');
             $slider->slider_image = $slider_img_url;
@@ -106,7 +106,7 @@ class SliderController extends Controller
 
     public function deleteSlider($id){
         $slider = Slider::findOrFail($id);
-        unlink($slider->slider_image);
+        File::delete($slider->slider_image);
         Slider::findOrFail($id)->delete();
         $notification = array(
             'message' => 'Slider Deleted Successfly',

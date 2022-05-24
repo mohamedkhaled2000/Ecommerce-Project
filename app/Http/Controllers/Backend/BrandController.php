@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Http\Traits\ImageTrait;
-
+use Illuminate\Support\Facades\File;
 use Image;
 
 class BrandController extends Controller
@@ -59,7 +59,9 @@ class BrandController extends Controller
 
         if($request->file('brand_image')){
             $brand_img = $request->file('brand_image');
-            @unlink(public_path($brand->brand_image));
+            if(File::exists(public_path($brand->brand_image))){
+                File::delete(public_path($brand->brand_image));
+            }
 
             $brand_img_url = $this->saveImage($brand_img,'upload/brand_images/');
 

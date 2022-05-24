@@ -15,6 +15,7 @@ use App\Models\User;
 use Hashids\Hashids;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
 use Intervention\Image\Gd\Decoder;
@@ -85,7 +86,7 @@ class IndexController extends Controller
 
         if($request->file('profile_photo_path')){
             $file = $request->file('profile_photo_path');
-            @unlink(public_path('upload/user_images/'.$data->profile_photo_path));
+            File::delete(public_path('upload/user_images/'.$data->profile_photo_path));
             $filename = date('YmdHi').'.'.$file->getClientOriginalExtension();
             $file->move(public_path('upload/user_images'),$filename);
             $data['profile_photo_path'] = $filename;

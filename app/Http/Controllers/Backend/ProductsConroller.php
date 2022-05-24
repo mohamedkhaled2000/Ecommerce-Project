@@ -13,6 +13,7 @@ use App\Models\MultiImage;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
 
 class ProductsConroller extends Controller
 {
@@ -180,7 +181,7 @@ class ProductsConroller extends Controller
 
         foreach($multi_imag as $id => $img){
             $imgDel = MultiImage::findOrFail($id);
-            unlink($imgDel->photo_name);
+            File::delete($imgDel->photo_name);
             $product_img_url = $this->saveMuliImgProduct($img,'upload/product_images/mulite_img/');
 
             MultiImage::where('id',$id)->update([
@@ -203,7 +204,7 @@ class ProductsConroller extends Controller
 
         $thambnail_product = $request->product_thambnail;
         $imgDel = Product::findOrFail($id);
-        unlink($imgDel->product_thambnail);
+        File::delete($imgDel->product_thambnail);
         $product_img_url = $this->saveImageProduct($thambnail_product,'upload/product_images/mulite_img/');
 
         Product::where('id',$id)->update([
@@ -220,7 +221,7 @@ class ProductsConroller extends Controller
 
     public function deleteImageProduct($id){
         $imgDel = MultiImage::findOrFail($id);
-        unlink($imgDel->photo_name);
+        File::delete($imgDel->photo_name);
         $imgDel->delete();
 
         $notification = array(
@@ -233,11 +234,11 @@ class ProductsConroller extends Controller
 
     public function deleteProduct($id){
         $product = Product::findOrFail($id);
-        unlink($product->product_thambnail);
+        File::delete($product->product_thambnail);
         Product::findOrFail($id)->delete();
         $multi_imag = MultiImage::where('product_id',$id)->get();
         foreach($multi_imag as $multi){
-            unlink($multi->photo_name);
+            File::delete($multi->photo_name);
             MultiImage::where('product_id',$id)->delete();
         }
 

@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\ImageTrait;
-
+use Illuminate\Support\Facades\File;
 
 class AdminUserController extends Controller
 {
@@ -139,8 +139,9 @@ class AdminUserController extends Controller
 
         $admin = Admin::finOrFail($id);
         if($request->file('profile_photo_path')){
-            unlink($admin->profile_photo_path);
-
+            if(File::exists($admin->profile_photo_path)){
+                File::delete($admin->profile_photo_path);
+            }
             $img_url = $this->saveImage($request->file('profile_photo_path'),'upload/admin_images/');
 
             $admin->update([

@@ -7,6 +7,7 @@ use App\Models\SiteSetting;
 use Illuminate\Http\Request;
 use App\Http\Traits\ImageTrait;
 use App\Models\Seo;
+use Illuminate\Support\Facades\File;
 
 class SiteSettingController extends Controller
 {
@@ -23,7 +24,7 @@ class SiteSettingController extends Controller
 
         if($request->file('logo')){
             $site = SiteSetting::findOrFail($id);
-            unlink($site->logo);
+            File::delete($site->logo);
             $logo_img_url = $this->updateLogo($request->file('logo'),'fontend/Logo/');
             $site->update([
                 'logo'              => $logo_img_url,

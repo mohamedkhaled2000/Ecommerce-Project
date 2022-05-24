@@ -8,7 +8,7 @@ use App\Models\BlogPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Traits\ImageTrait;
-
+use Illuminate\Support\Facades\File;
 
 class BlogCategoryController extends Controller
 {
@@ -163,8 +163,9 @@ class BlogCategoryController extends Controller
     public function deletePost($id){
 
        $post = BlogPost::findOrFail($id);
-        unlink($post->post_image);
-
+        if(File::exists($post->post_image)){
+            File::delete($post->post_image);
+        }
         $post->delete();
 
         $notification = array(
