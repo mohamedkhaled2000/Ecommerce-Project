@@ -28,7 +28,7 @@
 		@csrf
         <div class="form-group">
 		    <label class="info-title" for="exampleInputEmail1">Email / Phone<span>*</span></label>
-		    <input type="text" name="login"  class="form-control unicase-form-control text-input" id="email" :value="old('email')" required>
+		    <input type="email" name="email"  class="form-control unicase-form-control text-input" id="email" :value="old('email')" required>
 		</div>
 	  	<div class="form-group">
 		    <label class="info-title" for="exampleInputPassword1">Password <span>*</span></label>

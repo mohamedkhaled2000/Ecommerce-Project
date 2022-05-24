@@ -64,8 +64,7 @@ class IndexController extends Controller
         $posts = BlogPost::latest()->get();
 
         return view('fontend.index',
-        compact('sliders','products','featureies','special_offers' , 'posts'
-        ,'special_deals','category_skip_0','product_skip_0','category_skip_1','product_skip_1','brand_skip_1','brand_product_skip_1'));
+        compact('sliders','products','featureies','special_offers' , 'posts','special_deals','category_skip_0','product_skip_0','category_skip_1','product_skip_1','brand_skip_1','brand_product_skip_1'));
     }
 
     public function userLogout(){

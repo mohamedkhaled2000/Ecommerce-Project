@@ -7,7 +7,8 @@
     $today = DB::table('orders')->where('order_date',date('d-m-y'))->sum('amount');
     $month = DB::table('orders')->where('order_month',date('F'))->sum('amount');
     $year = DB::table('orders')->where('order_year',date('Y'))->sum('amount');
-    $pending = DB::table('orders')->where('status','Pending')->get();
+    $products = DB::table('products')->whereProduct_qty(0)->get();
+    $pending = DB::table('orders')->whereStatus('Pending')->get();
 @endphp
     <!-- Main content -->
     <section class="content">
@@ -70,7 +71,7 @@
                 <div class="box">
                     <div class="box-header">
                         <h4 class="box-title align-items-start flex-column">
-                            Pending Orders
+                            Out Of Stock Products
                         </h4>
                     </div>
                     <div class="box-body">
@@ -78,40 +79,43 @@
                             <table class="table no-border">
                                 <thead>
                                     <tr class="text-uppercase bg-lightest">
-                                        <th style="min-width: 250px"><span class="text-white">Date</span></th>
-                                        <th style="min-width: 100px"><span class="text-fade">Invoice</span></th>
-                                        <th style="min-width: 100px"><span class="text-fade">Amount</span></th>
-                                        <th style="min-width: 150px"><span class="text-fade">Payment</span></th>
-                                        <th style="min-width: 130px"><span class="text-fade">Status</span></th>
+                                        <th style="min-width: 250px"><span class="text-white">Image</span></th>
+                                        <th style="min-width: 100px"><span class="text-fade">Product Nmae</span></th>
+                                        <th style="min-width: 100px"><span class="text-fade">Price</span></th>
+                                        <th style="min-width: 150px"><span class="text-fade">Product Code</span></th>
+                                        <th style="min-width: 150px"><span class="text-fade">Status</span></th>
                                         <th style="min-width: 120px"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($pending as $item)
+                                    @foreach ($products as $item)
                                     <tr>
                                         <td class="pl-0 py-8">
                                             <span class="text-fade font-weight-600 d-block font-size-16">
-                                                {{ $item->order_date }}
+                                                <img src="{{ asset($item->product_thambnail) }}" width="80px">
                                             </span>
                                         </td>
                                         <td>
                                             <span class="text-fade font-weight-600 d-block font-size-16">
-                                                {{ $item->invoice_no }}
+                                                {{ $item->product_name_en }}
                                             </span>
                                         </td>
                                         <td>
                                             <span class="text-fade font-weight-600 d-block font-size-16">
-                                                {{ $item->amount }}
+                                                {{ $item->selling_price }}
                                             </span>
                                         </td>
                                         <td>
                                             <span class="text-fade font-weight-600 d-block font-size-16">
-                                                {{ $item->payment_type }}
+                                                {{ $item->product_code }}
                                             </span>
                                         </td>
                                         <td>
-                                            <span class="badge badge-primary-light badge-lg">{{ $item->status }}</span>
+                                            <span class="badge badge-danger">
+                                                Out Of Stock
+                                            </span>
                                         </td>
+
                                         <td class="text-right">
                                             <a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-bookmark-plus"></span></a>
                                             <a href="#" class="waves-effect waves-light btn btn-info btn-circle mx-5"><span class="mdi mdi-arrow-right"></span></a>
