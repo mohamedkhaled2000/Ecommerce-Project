@@ -19,6 +19,6 @@ class DatabaseSeeder extends Seeder
         // ->count(1000)
         // ->create();
 
-        $this->call(DatabaseSeeder::class);
+        $this->call(AdminSeeder::class);
     }
 }
