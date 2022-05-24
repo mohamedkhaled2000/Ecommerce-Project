@@ -13,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 
-class User extends Authenticatable implements MustVerifyEmail, JWTSubject
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens;
     use HasFactory;
