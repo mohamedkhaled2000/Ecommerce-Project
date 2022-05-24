@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use App\Models\Admin;
 class AdminSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('admins')->delete();
        Admin::create([
             'name' => 'Admin',
             'email' => 'admin@admin.com',
